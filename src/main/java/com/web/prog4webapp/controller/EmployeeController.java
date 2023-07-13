@@ -1,5 +1,6 @@
 package com.web.prog4webapp.controller;
 
+import com.web.prog4webapp.controller.rest.RestEmployee;
 import com.web.prog4webapp.mapper.EmployeeMapper;
 import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.service.EmployeeService;
@@ -29,10 +30,9 @@ public class EmployeeController {
     }
 
     @PostMapping("/employee")
-    public Employee createEmployee(@RequestParam("lastname") String lastname, @RequestParam("firstname") String firstname, @RequestParam("birthdate") LocalDate birthdate, @RequestParam("birthdate") MultipartFile image) throws IOException {
-        byte[] file = image.getBytes();
-        String encodedString = Base64.encodeBase64String(file);
-        return service.createEmployee(mapper.toDomain(lastname, firstname, birthdate, encodedString));
+    public String createEmployee(@ModelAttribute("employee") RestEmployee newEmployee) throws IOException {
+        service.createEmployee(mapper.toDomain(newEmployee));
+        return "home";
     }
 
 }
