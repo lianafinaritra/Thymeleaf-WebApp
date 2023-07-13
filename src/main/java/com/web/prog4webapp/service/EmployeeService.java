@@ -5,19 +5,27 @@ import com.web.prog4webapp.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class EmployeeService {
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeRepository repository;
 
     public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+        return repository.findAll();
+    }
+    public Employee getEmployeeById(String employee_id){
+        Optional<Employee> employee = repository.findById(employee_id);
+        if(employee.isPresent()){
+            Employee current = employee.get();
+            return current;
+        }
+        return new Employee();
     }
 
     public Employee createEmployee(Employee restEmployee){
-        return employeeRepository.save(restEmployee);
+        return repository.save(restEmployee);
     }
 }
