@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>A propos</title>
+    <link href="/css/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="flex justify-center items-center h-screen">
+    <div class="w-4/5 h-500 bg-white shadow-md rounded-lg p-6 justify-center items-center">
+        <div class="flex">
+            <div class="w-2/4">
+                <img th:src="@{'data:image/jpeg;base64,' + ${employee.image}}" alt="image" class="w-full h-auto">
+            </div>
+            <div class="w-2/4 pl-6">
+                <table>
+                    <tr>
+                        <td class="font-medium pr-2">Prénom :</td>
+                        <td th:text="${employee.firstName}"></td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium pr-2">Nom :</td>
+                        <td th:text="${employee.lastName}"></td>
+                    </tr>
+                    <tr>
+                        <td class="font-medium pr-2">Date de naissance :</td>
+                        <td th:text="${employee.birthDate}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

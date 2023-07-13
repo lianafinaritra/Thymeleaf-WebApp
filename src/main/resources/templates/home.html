@@ -6,62 +6,78 @@
     <link href="/css/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-<div>
-    <form action="/postEmployee" method="post" th:object="${employee}" enctype="multipart/form-data">
-        <div class="grid gap-6 mb-6 md:grid-cols-4">
-            <div>
-                <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
-                <input type="text" id="lastName" name="lastName" th:field="*{lastName}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required>
-            </div>
-            <div>
-                <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prénom</label>
-                <input type="text" id="firstName" name="firstName" th:field="*{firstName}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required>
-            </div>
-            <div>
-                <label for="birthDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Anniversaire</label>
-                <input type="date" id="birthDate" name="birthDate" th:field="*{birthDate}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-            </div>
-            <div>
-                <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo</label>
-                <input type="file" id="image" name="image" th:field="*{image}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-            </div>
+<div class="flex justify-center items-center h-screen bg-gray-100">
+    <div class="w-4/5 bg-white shadow-md rounded-lg p-6 h-full">
+        <div class="w-full h-32">
+            <form action="/postEmployee" method="post" th:object="${employee}" enctype="multipart/form-data">
+                <div class="grid gap-6 mb-6 md:grid-cols-4">
+                    <div>
+                        <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
+                        <input type="text" id="lastName" name="lastName" th:field="*{lastName}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required>
+                    </div>
+                    <div>
+                        <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prénom</label>
+                        <input type="text" id="firstName" name="firstName" th:field="*{firstName}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required>
+                    </div>
+                    <div>
+                        <label for="birthDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Anniversaire</label>
+                        <input type="date" id="birthDate" name="birthDate" th:field="*{birthDate}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo</label>
+                        <input type="file" id="image" name="image" th:field="*{image}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Envoyer
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="text-center">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Envoyer
-            </button>
-        </div>
-    </form>
-    <div class="flex flex-col">
-        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                <div class="overflow-hidden">
-                    <table class="min-w-full text-left text-sm font-light">
-                        <thead class="border-b font-medium dark:border-neutral-500">
-                        <tr>
-                            <th scope="col" class="px-6 py-4">Image</th>
-                            <th scope="col" class="px-6 py-4">First Name</th>
-                            <th scope="col" class="px-6 py-4">Last Name</th>
-                            <th scope="col" class="px-6 py-4">Birth Date</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="employee: ${employees}"
-                            class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600">
-                            <td class="whitespace-nowrap px-6 py-4 font-medium xl:w-2/12 h-6">
-                                <img th:src="@{'data:image/jpeg;base64,' + ${employee.image}}" alt="image">
-                            </td>
-                            <td class="whitespace-nowrap px-6 py-4" th:text="${employee.firstName}"></td>
-                            <td class="whitespace-nowrap px-6 py-4" th:text="${employee.lastName}"></td>
-                            <td class="whitespace-nowrap px-6 py-4" th:text="${employee.birthDate}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
+        <div class="flex flex-col mt-8">
+            <div class="overflow-x-auto">
+                <div class="py-2 align-middle inline-block min-w-full">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full text-left text-sm font-light bg-white border border-gray-300">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="px-6 py-3 font-medium text-gray-900">Image</th>
+                                <th scope="col" class="px-6 py-3 font-medium text-gray-900">First Name</th>
+                                <th scope="col" class="px-6 py-3 font-medium text-gray-900">Last Name</th>
+                                <th scope="col" class="px-6 py-3 font-medium text-gray-900">Birth Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item: ${employees}"
+                                class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600"
+                                th:attr="data-id=${item.id}">
+                                <td class="whitespace-nowrap px-6 py-4 font-medium xl:w-2/12 h-6">
+                                    <img th:src="@{'data:image/jpeg;base64,' + ${item.image}}" alt="image">
+                                </td>
+                                <td class="whitespace-nowrap px-6 py-4" th:text="${item.firstName}"></td>
+                                <td class="whitespace-nowrap px-6 py-4" th:text="${item.lastName}"></td>
+                                <td class="whitespace-nowrap px-6 py-4" th:text="${item.birthDate}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const rows = document.querySelectorAll('[data-id]');
+        rows.forEach(function(row) {
+            row.addEventListener('click', function() {
+                const employeeId = row.getAttribute('data-id');
+                window.location.href = '/details?id=' + employeeId;
+            });
+        });
+    });
+</script>
 </body>
 </html>
 

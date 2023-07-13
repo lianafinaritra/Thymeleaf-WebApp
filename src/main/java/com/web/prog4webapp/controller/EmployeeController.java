@@ -25,6 +25,12 @@ public class EmployeeController {
         model.addAttribute("employee", RestEmployee.builder().build());
         return "home";
     }
+    @GetMapping("/details")
+    public String EmployeePage(@RequestParam("id") String id, Model model) {
+        Employee employee = service.getEmployeeById(id);;
+        model.addAttribute("employee", employee);
+        return "details";
+    }
     @GetMapping("/employees")
     public List<Employee> getAllEmployees() {
         return service.getAllEmployees();
