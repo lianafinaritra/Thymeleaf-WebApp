@@ -5,13 +5,11 @@ import com.web.prog4webapp.mapper.EmployeeMapper;
 import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.service.EmployeeService;
 import lombok.AllArgsConstructor;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -21,7 +19,9 @@ public class EmployeeController {
     private final EmployeeService service;
     private final EmployeeMapper mapper;
     @GetMapping("/")
-    public String HomePage() {
+    public String HomePage(Model model) {
+        List<Employee> employees = service.getAllEmployees();
+        model.addAttribute("employees", employees);
         return "home";
     }
     @GetMapping("/employees")

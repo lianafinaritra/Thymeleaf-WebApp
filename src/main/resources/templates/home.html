@@ -6,18 +6,18 @@
 </head>
 <body>
 <ul>
-    <form action="/employee" method="post">
+    <form action="/employee" method="post" th:object="${employee}" enctype="multipart/form-data">
         <label for="lastname">Nom :</label>
-        <input type="text" id="lastname" name="lastname" required>
+        <input type="text" id="lastname" name="lastname" th:field="*{lastName}" required>
 
         <label for="firstname">Prénom :</label>
-        <input type="text" id="firstname" name="firstname" required>
+        <input type="text" id="firstname" name="firstname" th:field="*{firstName}" required>
 
         <label for="birthdate">Anniversaire :</label>
-        <input type="date" id="birthdate" name="birthdate" required>
+        <input type="date" id="birthdate" name="birthdate" th:field="*{birthDate}" required>
 
         <label for="image">Photo :</label>
-        <input type="file" id="image" name="image" required>
+        <input type="file" id="image" name="image" th:field="*{image}" required>
 
         <button type="submit">Envoyer</button>
     </form>
