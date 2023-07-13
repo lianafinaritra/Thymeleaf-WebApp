@@ -13,19 +13,26 @@
                 <div class="grid gap-6 mb-6 md:grid-cols-4">
                     <div>
                         <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
-                        <input type="text" id="lastName" name="lastName" th:field="*{lastName}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required>
+                        <input type="text" id="lastName" name="lastName" th:field="*{lastName}"
+                               class="form-input"
+                               placeholder="John" required>
                     </div>
                     <div>
                         <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prénom</label>
-                        <input type="text" id="firstName" name="firstName" th:field="*{firstName}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required>
+                        <input type="text" id="firstName" name="firstName" th:field="*{firstName}"
+                               class="form-input"
+                               placeholder="Doe" required>
                     </div>
                     <div>
                         <label for="birthDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Anniversaire</label>
-                        <input type="date" id="birthDate" name="birthDate" th:field="*{birthDate}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <input type="date" id="birthDate" name="birthDate" th:field="*{birthDate}"
+                               class="form-input"
+                               required>
                     </div>
                     <div>
                         <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo</label>
-                        <input type="file" id="image" name="image" th:field="*{image}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                        <input type="file" id="image" name="image" th:field="*{image}"
+                               class="form-input">
                     </div>
                 </div>
                 <div class="text-center">
@@ -36,13 +43,14 @@
             </form>
         </div>
         <div class="flex flex-col mt-8">
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
                 <div class="py-2 align-middle inline-block min-w-full">
                     <div class="overflow-hidden">
                         <table class="min-w-full text-left text-sm font-light bg-white border border-gray-300">
                             <thead>
                             <tr>
                                 <th scope="col" class="px-6 py-3 font-medium text-gray-900">Image</th>
+                                <th scope="col" class="px-6 py-3 font-medium text-gray-900">Matricule</th>
                                 <th scope="col" class="px-6 py-3 font-medium text-gray-900">First Name</th>
                                 <th scope="col" class="px-6 py-3 font-medium text-gray-900">Last Name</th>
                                 <th scope="col" class="px-6 py-3 font-medium text-gray-900">Birth Date</th>
@@ -50,11 +58,12 @@
                             </thead>
                             <tbody>
                             <tr th:each="item: ${employees}"
-                                class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600"
+                                class="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-black-500"
                                 th:attr="data-id=${item.id}">
                                 <td class="whitespace-nowrap px-6 py-4 font-medium xl:w-2/12 h-6">
-                                    <img th:src="@{'data:image/jpeg;base64,' + ${item.image}}" alt="image">
+                                    <img th:src="@{'data:image/jpeg;base64,' + ${item.image}}" alt="Aucune image">
                                 </td>
+                                <td class="whitespace-nowrap px-6 py-4" th:text="${item.matricule}"></td>
                                 <td class="whitespace-nowrap px-6 py-4" th:text="${item.firstName}"></td>
                                 <td class="whitespace-nowrap px-6 py-4" th:text="${item.lastName}"></td>
                                 <td class="whitespace-nowrap px-6 py-4" th:text="${item.birthDate}"></td>

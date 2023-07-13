@@ -19,7 +19,7 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    // private String matricule;
+    private String matricule;
     private String lastName;
     private String firstName;
     private LocalDate birthDate;

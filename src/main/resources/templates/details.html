@@ -10,10 +10,14 @@
     <div class="w-4/5 h-500 bg-white shadow-md rounded-lg p-6 justify-center items-center">
         <div class="flex">
             <div class="w-2/4">
-                <img th:src="@{'data:image/jpeg;base64,' + ${employee.image}}" alt="image" class="w-full h-auto">
+                <img th:src="@{'data:image/jpeg;base64,' + ${employee.image}}" alt="Aucune image" class="w-full h-auto">
             </div>
             <div class="w-2/4 pl-6">
                 <table>
+                    <tr>
+                        <td class="font-medium pr-2">Matricule :</td>
+                        <td th:text="${employee.matricule}"></td>
+                    </tr>
                     <tr>
                         <td class="font-medium pr-2">Prénom :</td>
                         <td th:text="${employee.firstName}"></td>
