@@ -5,27 +5,45 @@
     <title>Liste des employés</title>
 </head>
 <body>
-<ul>
-    <form action="/employee" method="post" th:object="${employee}" enctype="multipart/form-data">
-        <label for="lastname">Nom :</label>
-        <input type="text" id="lastname" name="lastname" th:field="*{lastName}" required>
+<div>
+    <form action="/postEmployee" method="post" th:object="${employee}" enctype="multipart/form-data">
+        <label for="lastName">Nom :</label>
+        <input type="text" id="lastName" name="lastName" th:field="*{lastName}" required>
 
-        <label for="firstname">Prénom :</label>
-        <input type="text" id="firstname" name="firstname" th:field="*{firstName}" required>
+        <label for="firstName">Prénom :</label>
+        <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required>
 
-        <label for="birthdate">Anniversaire :</label>
-        <input type="date" id="birthdate" name="birthdate" th:field="*{birthDate}" required>
+        <label for="birthDate">Anniversaire :</label>
+        <input type="date" id="birthDate" name="birthDate" th:field="*{birthDate}" required>
 
         <label for="image">Photo :</label>
         <input type="file" id="image" name="image" th:field="*{image}" required>
 
         <button type="submit">Envoyer</button>
     </form>
-    <ul>
-        <li th:each="employee : ${employees}">
-            <span th:text="${employee.firstname}"></span> - <span th:text="${employee.lastname}"></span>
-        </li>
-    </ul>
-</ul>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Image</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Birth Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee: ${employees}">
+                <td>
+                    <img th:src="@{'data:image/jpeg;base64,' + ${employee.image}}" alt="image">
+                </td>
+                <td th:text="${employee.firstName}"></td>
+                <td th:text="${employee.lastName}"></td>
+                <td th:text="${employee.birthDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>
+

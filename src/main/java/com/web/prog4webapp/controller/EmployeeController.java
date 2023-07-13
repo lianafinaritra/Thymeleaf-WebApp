@@ -22,6 +22,7 @@ public class EmployeeController {
     public String HomePage(Model model) {
         List<Employee> employees = service.getAllEmployees();
         model.addAttribute("employees", employees);
+        model.addAttribute("employee", RestEmployee.builder().build());
         return "home";
     }
     @GetMapping("/employees")
@@ -29,10 +30,10 @@ public class EmployeeController {
         return service.getAllEmployees();
     }
 
-    @PostMapping("/employee")
+    @PostMapping("/postEmployee")
     public String createEmployee(@ModelAttribute("employee") RestEmployee newEmployee) throws IOException {
         service.createEmployee(mapper.toDomain(newEmployee));
-        return "home";
+        return "redirect:/";
     }
 
 }
