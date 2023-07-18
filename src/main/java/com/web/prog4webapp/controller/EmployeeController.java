@@ -19,11 +19,9 @@ public class EmployeeController {
     private final EmployeeService service;
     private final EmployeeMapper mapper;
     @GetMapping("/")
-    public String HomePage(Model model) {
-        List<Employee> employees = service.getAllEmployees();
-        model.addAttribute("employees", employees);
+    public String FormPage(Model model) {
         model.addAttribute("employee", RestEmployee.builder().build());
-        return "home";
+        return "form";
     }
     @GetMapping("/details")
     public String EmployeePage(@RequestParam("id") String id, Model model) {
@@ -37,9 +35,11 @@ public class EmployeeController {
     }
 
     @PostMapping("/postEmployee")
-    public String createEmployee(@ModelAttribute("employee") RestEmployee newEmployee) throws IOException {
+    public String createEmployee(@ModelAttribute("employee") RestEmployee newEmployee, Model model) throws IOException {
         service.createEmployee(mapper.toDomain(newEmployee));
-        return "redirect:/";
+        List<Employee> employees = service.getAllEmployees();
+        model.addAttribute("employees", employees);
+        return "list";
     }
 
 }
