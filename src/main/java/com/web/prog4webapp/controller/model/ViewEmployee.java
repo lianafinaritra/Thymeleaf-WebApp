@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class ViewEmployee implements Serializable {
+    private String matricule;
     private String lastName;
     private String firstName;
     @DateTimeFormat(pattern = "dd/MM/yyyy")

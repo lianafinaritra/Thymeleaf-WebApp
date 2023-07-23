@@ -31,6 +31,7 @@ public class EmployeeMapper {
         CNAPS cnaps = domain.getCnaps();
         List<Phone> phone = domain.getPhone();
         return ViewEmployee.builder()
+                .matricule(domain.getMatricule())
                 .lastName(domain.getLastName())
                 .firstName(domain.getFirstName())
                 .birthDate(domain.getBirthDate())
