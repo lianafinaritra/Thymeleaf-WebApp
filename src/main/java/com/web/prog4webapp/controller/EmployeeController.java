@@ -1,6 +1,7 @@
 package com.web.prog4webapp.controller;
 
-import com.web.prog4webapp.controller.rest.RestEmployee;
+import com.web.prog4webapp.controller.model.RestEmployee;
+import com.web.prog4webapp.controller.model.ViewEmployee;
 import com.web.prog4webapp.mapper.EmployeeMapper;
 import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.service.EmployeeService;
@@ -24,9 +25,10 @@ public class EmployeeController {
         return "form";
     }
     @GetMapping("/details")
-    public String EmployeePage(@RequestParam("id") String id, Model model) {
-        Employee employee = service.getEmployeeById(id);;
-        model.addAttribute("employee", employee);
+    public String EmployeePage(@RequestParam("id") String id, Model model) throws IOException {
+        Employee employee = service.getEmployeeById(id);
+        ViewEmployee viewEmployee = mapper.toRest(employee);
+        model.addAttribute("employee", viewEmployee);
         return "details";
     }
     @GetMapping("/employees")
@@ -41,5 +43,4 @@ public class EmployeeController {
         model.addAttribute("employees", employees);
         return "list";
     }
-
 }

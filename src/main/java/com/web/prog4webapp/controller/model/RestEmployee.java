@@ -1,4 +1,4 @@
-package com.web.prog4webapp.controller.rest;
+package com.web.prog4webapp.controller.model;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

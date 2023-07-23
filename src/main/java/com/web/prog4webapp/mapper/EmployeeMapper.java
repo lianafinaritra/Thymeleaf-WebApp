@@ -1,6 +1,7 @@
 package com.web.prog4webapp.mapper;
 
-import com.web.prog4webapp.controller.rest.RestEmployee;
+import com.web.prog4webapp.controller.model.RestEmployee;
+import com.web.prog4webapp.controller.model.ViewEmployee;
 import com.web.prog4webapp.model.CNAPS;
 import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.model.Phone;
@@ -11,7 +12,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -23,6 +27,27 @@ public class EmployeeMapper {
     private EmployeeRepository repository;
     private CnapsRepository cnapsRepository;
     private PhoneRepository phoneRepository;
+    public ViewEmployee toRest(Employee domain) throws IOException {
+        CNAPS cnaps = domain.getCnaps();
+        List<Phone> phone = domain.getPhone();
+        return ViewEmployee.builder()
+                .lastName(domain.getLastName())
+                .firstName(domain.getFirstName())
+                .birthDate(domain.getBirthDate())
+                .sex(String.valueOf(domain.getSex()))
+                .address(domain.getAddress())
+                .personalEmail(domain.getPersonalEmail())
+                .email(domain.getEmail())
+                .role(domain.getRole())
+                .children(domain.getChildren())
+                .hire(domain.getHire())
+                .departure(domain.getDeparture())
+                .spc(String.valueOf(domain.getSpc()))
+                .cnaps(cnaps.getCnaps())
+                .phone(phone.get(0).getPhoneNumber())
+                .image(domain.getImage())
+                .build();
+    }
     public Employee toDomain(RestEmployee restEmployee) throws IOException {
         String mat = "";
         List<Employee> employees = repository.findAll();

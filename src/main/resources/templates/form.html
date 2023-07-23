@@ -60,7 +60,7 @@
                     <div class="formbold-input-select-wrapper">
                         <label for="sex" class="formbold-form-label"> Sexe </label>
                         <select id="sex" name="sex" class="formbold-form-input">
-                            <option th:selected="${employee.sex == 'M'}" value="M">Masculin</option>
+                            <option th:selected="${employee.sex == 'H'}" value="H">Masculin</option>
                             <option th:selected="${employee.sex == 'F'}" value="F">Féminin</option>
                         </select>
                     </div>
@@ -209,18 +209,8 @@
             </div>
 
             <div class="formbold-form-btn-wrapper">
-                <button class="formbold-btn">
+                <button class="formbold-btn" type="submit">
                     Enregistrer
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_1675_1807)">
-                            <path d="M10.7814 7.33312L7.20541 3.75712L8.14808 2.81445L13.3334 7.99979L8.14808 13.1851L7.20541 12.2425L10.7814 8.66645H2.66675V7.33312H10.7814Z" fill="white"/>
-                        </g>
-                        <defs>
-                            <clipPath id="clip0_1675_1807">
-                                <rect width="16" height="16" fill="white"/>
-                            </clipPath>
-                        </defs>
-                    </svg>
                 </button>
             </div>
         </form>
@@ -413,61 +403,5 @@
     }
 
 </style>
-<script>
-    const stepMenuOne = document.querySelector('.formbold-step-menu1')
-    const stepMenuTwo = document.querySelector('.formbold-step-menu2')
-    const stepMenuThree = document.querySelector('.formbold-step-menu3')
-
-    const stepOne = document.querySelector('.formbold-form-step-1')
-    const stepTwo = document.querySelector('.formbold-form-step-2')
-    const stepThree = document.querySelector('.formbold-form-step-3')
-
-    const formSubmitBtn = document.querySelector('.formbold-btn')
-    const formBackBtn = document.querySelector('.formbold-back-btn')
-
-    formSubmitBtn.addEventListener("click", function(event){
-        event.preventDefault()
-        if(stepMenuOne.className == 'formbold-step-menu1 active') {
-            event.preventDefault()
-
-            stepMenuOne.classList.remove('active')
-            stepMenuTwo.classList.add('active')
-
-            stepOne.classList.remove('active')
-            stepTwo.classList.add('active')
-
-            formBackBtn.classList.add('active')
-            formBackBtn.addEventListener("click", function (event) {
-                event.preventDefault()
-
-                stepMenuOne.classList.add('active')
-                stepMenuTwo.classList.remove('active')
-
-                stepOne.classList.add('active')
-                stepTwo.classList.remove('active')
-
-                formBackBtn.classList.remove('active')
-
-            })
-
-        } else if(stepMenuTwo.className == 'formbold-step-menu2 active') {
-            event.preventDefault()
-
-            stepMenuTwo.classList.remove('active')
-            stepMenuThree.classList.add('active')
-
-            stepTwo.classList.remove('active')
-            stepThree.classList.add('active')
-
-            formBackBtn.classList.remove('active')
-            formSubmitBtn.textContent = 'Submit'
-        } else if(stepMenuThree.className == 'formbold-step-menu3 active') {
-            document.querySelector('form').submit()
-        }
-    })
-
-
-
-</script>
 </html>
 
