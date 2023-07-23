@@ -4,6 +4,7 @@ import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,5 +28,11 @@ public class EmployeeService {
 
     public Employee createEmployee(Employee restEmployee){
         return repository.save(restEmployee);
+    }
+
+    @Transactional
+
+    public List<Employee> searchByWord(String word) {
+        return repository.searchByWord(word);
     }
 }

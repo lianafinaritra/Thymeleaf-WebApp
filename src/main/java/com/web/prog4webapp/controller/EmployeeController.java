@@ -31,6 +31,13 @@ public class EmployeeController {
         model.addAttribute("employee", viewEmployee);
         return "details";
     }
+
+    @GetMapping("/search")
+    public String SearchPage(@RequestParam("word") String word, Model model){
+        List<Employee> employees = service.searchByWord(word);
+        model.addAttribute("employees", employees);
+        return "list";
+    }
     @GetMapping("/employees")
     public List<Employee> getAllEmployees() {
         return service.getAllEmployees();
