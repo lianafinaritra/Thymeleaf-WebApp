@@ -53,7 +53,7 @@ public class Employee implements Serializable {
         H,
         F
     }
-    enum SPC {
+    public enum SPC {
         M1,M2,OS1, OS2, OS3, OP1
     }
     public Sex convertStringToSex(String sexStr) {

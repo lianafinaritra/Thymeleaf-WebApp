@@ -38,6 +38,20 @@ public class EmployeeController {
         model.addAttribute("employees", employees);
         return "list";
     }
+    @GetMapping("/sort")
+    public String SortPage(@RequestParam(value = "sortAttribute", defaultValue = "lastName") String sortAttribute,
+                           @RequestParam(value = "sortOrder", defaultValue = "asc") String sortOrder,
+                           Model model) {
+        List<Employee> employees = service.sort(sortOrder, sortAttribute);
+        model.addAttribute("employees", employees);
+        return "list";
+    }
+    @GetMapping("/list")
+    public String ListPage(Model model){
+        List<Employee> employees = service.getAllEmployees();
+        model.addAttribute("employees", employees);
+        return "list";
+    }
     @GetMapping("/employees")
     public List<Employee> getAllEmployees() {
         return service.getAllEmployees();

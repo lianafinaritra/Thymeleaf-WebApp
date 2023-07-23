@@ -10,19 +10,46 @@
     <div class="w-4/5 bg-white shadow-md rounded-lg p-6 h-screen">
         <div class="flex flex-col mt-8">
             <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-                <div class="py-2 align-middle inline-block min-w-full">
-                    <form action="/search" method="get">
-                        <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                                </svg>
-                            </div>
-                            <input type="search" name="word" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required>
-                            <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                <div class="py-2 align-middle inline-block min-w-full space-y-4">
+                    <form action="/search" method="get" class="flex items-center w-1/2">
+                        <label for="search" class="sr-only">Search</label>
+                        <div class="relative flex items-center w-full">
+                            <svg class="absolute left-3 w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                            </svg>
+                            <input type="search" name="word" id="search" class="w-full px-4 py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required>
+                            <button type="submit" class="ml-2 px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                         </div>
                     </form>
+
+                    <form action="/sort" method="get" class="p-4 border border-gray-300 rounded-lg shadow-md">
+                        <div class="mb-4">
+                            <label for="sortAttribute" class="block text-sm font-medium text-gray-700">Trier par :</label>
+                            <select id="sortAttribute" name="sortAttribute" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                <option value="lastName">Nom</option>
+                                <option value="firstName">Prénom</option>
+                                <option value="sex">Sexe</option>
+                                <option value="role">Fonction</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Ordre de tri :</label>
+                            <div class="mt-1">
+                                <label for="radioButton1" class="inline-flex items-center">
+                                    <input type="radio" name="sortOrder" id="radioButton1" class="formbold-radio" value="asc">
+                                    <span class="ml-2 text-sm text-gray-700">Croissant</span>
+                                </label>
+                                <label for="radioButton2" class="ml-4 inline-flex items-center">
+                                    <input type="radio" name="sortOrder" id="radioButton2" class="formbold-radio" value="desc">
+                                    <span class="ml-2 text-sm text-gray-700">Décroissant</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white font-medium rounded-lg py-2 px-4 sm:text-sm">
+                            Trier
+                        </button>
+                    </form>
+
                     <div class="overflow-hidden">
                         <table class="min-w-full text-left text-sm font-light bg-white border border-gray-300">
                             <thead>

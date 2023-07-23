@@ -1,6 +1,7 @@
 package com.web.prog4webapp.repository;
 
 import com.web.prog4webapp.model.Employee;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,4 +16,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
             "OR LOWER(role) LIKE LOWER(CONCAT('%', :word, '%')))",
             nativeQuery = true)
     List<Employee> searchByWord(String word);
+
+    List<Employee> findAll(Sort sort);
 }
