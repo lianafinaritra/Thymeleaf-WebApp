@@ -2,46 +2,472 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Nouveau employé</title>
+    <title>Nouvel employé</title>
     <link href="/css/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="flex justify-center items-center h-screen bg-gray-100">
-    <div class="w-4/5 bg-white shadow-md rounded-lg p-6 h-screen">
-        <div class="w-full h-32">
-            <form action="/postEmployee" method="post" th:object="${employee}" enctype="multipart/form-data">
+<div class="formbold-main-wrapper">
+    <div class="formbold-form-wrapper">
+        <form action="/postEmployee" method="post" th:object="${employee}" enctype="multipart/form-data">
+            <div class="formbold-steps">
+                <ul>
+                    <li class="formbold-step-menu1 active">
+                        Formulaire
+                    </li>
+                </ul>
+            </div>
+            <div class="formbold-form-step-1 active">
+                <div class="formbold-input-flex">
                     <div>
-                        <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
-                        <input type="text" id="lastName" name="lastName" th:field="*{lastName}"
-                               class="form-input"
-                               placeholder="John" required>
+                        <label for="lastName" class="formbold-form-label"> Nom </label>
+                        <input
+                                type="text"
+                                name="lastName"
+                                placeholder="John"
+                                id="lastName"
+                                th:field="*{lastName}"
+                                class="formbold-form-input"
+                                required
+                        />
                     </div>
                     <div>
-                        <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prénom</label>
-                        <input type="text" id="firstName" name="firstName" th:field="*{firstName}"
-                               class="form-input"
-                               placeholder="Doe" required>
+                        <label for="firstName" class="formbold-form-label"> Prénom </label>
+                        <input
+                                type="text"
+                                name="firstName"
+                                placeholder="Doe"
+                                id="firstName"
+                                th:field="*{firstName}"
+                                class="formbold-form-input"
+                                required
+                        />
                     </div>
-                    <div>
-                        <label for="birthDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Anniversaire</label>
-                        <input type="date" id="birthDate" name="birthDate" th:field="*{birthDate}"
-                               class="form-input"
-                               required>
-                    </div>
-                    <div>
-                        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo</label>
-                        <input type="file" id="image" name="image" th:field="*{image}"
-                               class="form-input">
-                    </div>
-                <div class="text-center">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Envoyer
-                    </button>
                 </div>
-            </form>
-        </div>
+
+                <div class="formbold-input-flex">
+                    <div>
+                        <label for="birthDate" class="formbold-form-label"> Anniversaire </label>
+                        <input
+                                type="date"
+                                name="birthDate"
+                                placeholder="Doe"
+                                id="birthDate"
+                                th:field="*{birthDate}"
+                                class="formbold-form-input"
+                                required
+                        />
+                    </div>
+                    <div class="formbold-input-select-wrapper">
+                        <label for="sex" class="formbold-form-label"> Sexe </label>
+                        <select id="sex" name="sex" class="formbold-form-input">
+                            <option th:selected="${employee.sex == 'M'}" value="M">Masculin</option>
+                            <option th:selected="${employee.sex == 'F'}" value="F">Féminin</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="address" class="formbold-form-label"> Adresse </label>
+                    <input
+                            type="text"
+                            name="address"
+                            id="address"
+                        placeholder="LOT XXX Antananarivo MADAGASCAR"
+                            class="formbold-form-input"
+                            th:field="*{address}"
+                            required
+                    />
+                </div>
+
+                <div>
+                    <label for="phone" class="formbold-form-label"> Téléphone </label>
+                    <input
+                            type="text"
+                            name="phone"
+                            id="phone"
+                            placeholder="03X XX XXX XX"
+                            class="formbold-form-input"
+                            th:field="*{phone}"
+                            required
+                    />
+                </div>
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="email" class="formbold-form-label"> Email Professionnel </label>
+                    <input
+                            type="email"
+                            name="email"
+                            placeholder="XXXX@gmail.com"
+                            id="email"
+                            th:field="*{email}"
+                            class="formbold-form-input"
+                            required
+                    />
+                </div>
+                <div>
+                    <label for="personalEmail" class="formbold-form-label"> Email Personnel </label>
+                    <input
+                            type="email"
+                            name="personalEmail"
+                            placeholder="XXXX@gmail.com"
+                            id="personalEmail"
+                            th:field="*{personalEmail}"
+                            class="formbold-form-input"
+                            required
+                    />
+                </div>
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="role" class="formbold-form-label"> Fonction </label>
+                    <input
+                            type="text"
+                            name="role"
+                            placeholder="Administrateur"
+                            id="role"
+                            th:field="*{role}"
+                            class="formbold-form-input"
+                            required
+                    />
+                </div>
+                <div>
+                    <label for="children" class="formbold-form-label"> Nombres d'enfants à charge </label>
+                    <input
+                            type="number"
+                            name="children"
+                            placeholder="XXXX@gmail.com"
+                            id="children"
+                            th:field="*{children}"
+                            class="formbold-form-input"
+                            required
+                    />
+                </div>
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="hire" class="formbold-form-label"> Date d'embauche </label>
+                    <input
+                            type="date"
+                            name="hire"
+                            id="hire"
+                            th:field="*{hire}"
+                            class="formbold-form-input"
+                            required
+                    />
+                </div>
+                <div>
+                    <label for="departure" class="formbold-form-label"> Date de départ </label>
+                    <input
+                            type="date"
+                            name="departure"
+                            id="departure"
+                            class="formbold-form-input"
+                            th:field="*{departure}"
+                    />
+                </div>
+            </div>
+
+            <div class="formbold-input-flex">
+                <div>
+                    <label for="cnaps" class="formbold-form-label"> CNAPS </label>
+                    <input
+                            type="text"
+                            name="cnaps"
+                            id="cnaps"
+                            th:field="*{cnaps}"
+                            class="formbold-form-input"
+                            required
+                    />
+                </div>
+                <div class="formbold-input-select-wrapper">
+                    <label for="spc" class="formbold-form-label"> Catégorie Socio-professionnelle </label>
+                    <select id="spc" name="spc" class="formbold-form-input">
+                        <option th:selected="${employee.spc == 'M1'}" value="M1">M1</option>
+                        <option th:selected="${employee.spc == 'M2'}" value="M2">M2</option>
+                        <option th:selected="${employee.spc == 'OS1'}" value="OS1">OS1</option>
+                        <option th:selected="${employee.spc == 'OS2'}" value="OS2">OS2</option>
+                        <option th:selected="${employee.spc == 'OS3'}" value="OS3">OS3</option>
+                        <option th:selected="${employee.spc == 'OP1'}" value="OP1">OP1</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label for="image" class="formbold-form-label"> Photo </label>
+                <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        class="formbold-form-input"
+                        th:field="*{image}"
+                        required
+                />
+            </div>
+
+            <div class="formbold-form-btn-wrapper">
+                <button class="formbold-btn">
+                    Enregistrer
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_1675_1807)">
+                            <path d="M10.7814 7.33312L7.20541 3.75712L8.14808 2.81445L13.3334 7.99979L8.14808 13.1851L7.20541 12.2425L10.7814 8.66645H2.66675V7.33312H10.7814Z" fill="white"/>
+                        </g>
+                        <defs>
+                            <clipPath id="clip0_1675_1807">
+                                <rect width="16" height="16" fill="white"/>
+                            </clipPath>
+                        </defs>
+                    </svg>
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 </body>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: "Inter", sans-serif;
+    }
+    .formbold-main-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 48px;
+    }
+
+    .formbold-form-wrapper {
+        margin: 0 auto;
+        max-width: 550px;
+        width: 100%;
+        background: white;
+    }
+
+    .formbold-steps {
+        padding-bottom: 18px;
+        margin-bottom: 35px;
+        border-bottom: 1px solid #DDE3EC;
+    }
+    .formbold-steps ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: flex;
+        gap: 40px;
+    }
+    .formbold-steps li {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: #536387;
+    }
+    .formbold-steps li span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #DDE3EC;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: #536387;
+    }
+    .formbold-steps li.active {
+        color: #07074D;;
+    }
+    .formbold-steps li.active span {
+        background: #6A64F1;
+        color: #FFFFFF;
+    }
+
+    .formbold-input-flex {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 22px;
+    }
+    .formbold-input-flex > div {
+        width: 50%;
+    }
+    .formbold-form-input {
+        width: 100%;
+        padding: 13px 22px;
+        border-radius: 5px;
+        border: 1px solid #DDE3EC;
+        background: #FFFFFF;
+        font-weight: 500;
+        font-size: 16px;
+        color: #536387;
+        outline: none;
+        resize: none;
+    }
+    .formbold-form-input:focus {
+        border-color: #6a64f1;
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+    .formbold-form-label {
+        color: #07074D;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 24px;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .formbold-form-confirm {
+        border-bottom: 1px solid #DDE3EC;
+        padding-bottom: 35px;
+    }
+    .formbold-form-confirm p {
+        font-size: 16px;
+        line-height: 24px;
+        color: #536387;
+        margin-bottom: 22px;
+        width: 75%;
+    }
+    .formbold-form-confirm > div {
+        display: flex;
+        gap: 15px;
+    }
+
+    .formbold-confirm-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #FFFFFF;
+        border: 0.5px solid #DDE3EC;
+        border-radius: 5px;
+        font-size: 16px;
+        line-height: 24px;
+        color: #536387;
+        cursor: pointer;
+        padding: 10px 20px;
+        transition: all .3s ease-in-out;
+    }
+    .formbold-confirm-btn {
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.12);
+    }
+    .formbold-confirm-btn.active {
+        background: #6A64F1;
+        color: #FFFFFF;
+    }
+
+    .formbold-form-step-1,
+    .formbold-form-step-2,
+    .formbold-form-step-3 {
+        display: none;
+    }
+    .formbold-form-step-1.active,
+    .formbold-form-step-2.active,
+    .formbold-form-step-3.active {
+        display: block;
+    }
+
+    .formbold-form-btn-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 25px;
+        margin-top: 25px;
+    }
+    .formbold-back-btn {
+        cursor: pointer;
+        background: #FFFFFF;
+        border: none;
+        color: #07074D;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        display: none;
+    }
+    .formbold-back-btn.active {
+        display: block;
+    }
+    .formbold-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 16px;
+        border-radius: 5px;
+        padding: 10px 25px;
+        border: none;
+        font-weight: 500;
+        background-color: #6A64F1;
+        color: white;
+        cursor: pointer;
+    }
+    .formbold-btn:hover {
+        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    }
+
+</style>
+<script>
+    const stepMenuOne = document.querySelector('.formbold-step-menu1')
+    const stepMenuTwo = document.querySelector('.formbold-step-menu2')
+    const stepMenuThree = document.querySelector('.formbold-step-menu3')
+
+    const stepOne = document.querySelector('.formbold-form-step-1')
+    const stepTwo = document.querySelector('.formbold-form-step-2')
+    const stepThree = document.querySelector('.formbold-form-step-3')
+
+    const formSubmitBtn = document.querySelector('.formbold-btn')
+    const formBackBtn = document.querySelector('.formbold-back-btn')
+
+    formSubmitBtn.addEventListener("click", function(event){
+        event.preventDefault()
+        if(stepMenuOne.className == 'formbold-step-menu1 active') {
+            event.preventDefault()
+
+            stepMenuOne.classList.remove('active')
+            stepMenuTwo.classList.add('active')
+
+            stepOne.classList.remove('active')
+            stepTwo.classList.add('active')
+
+            formBackBtn.classList.add('active')
+            formBackBtn.addEventListener("click", function (event) {
+                event.preventDefault()
+
+                stepMenuOne.classList.add('active')
+                stepMenuTwo.classList.remove('active')
+
+                stepOne.classList.add('active')
+                stepTwo.classList.remove('active')
+
+                formBackBtn.classList.remove('active')
+
+            })
+
+        } else if(stepMenuTwo.className == 'formbold-step-menu2 active') {
+            event.preventDefault()
+
+            stepMenuTwo.classList.remove('active')
+            stepMenuThree.classList.add('active')
+
+            stepTwo.classList.remove('active')
+            stepThree.classList.add('active')
+
+            formBackBtn.classList.remove('active')
+            formSubmitBtn.textContent = 'Submit'
+        } else if(stepMenuThree.className == 'formbold-step-menu3 active') {
+            document.querySelector('form').submit()
+        }
+    })
+
+
+
+</script>
 </html>
 
