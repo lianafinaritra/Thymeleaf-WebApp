@@ -5,12 +5,15 @@ import com.web.prog4webapp.controller.model.ViewEmployee;
 import com.web.prog4webapp.mapper.EmployeeMapper;
 import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.service.EmployeeService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -64,4 +67,36 @@ public class EmployeeController {
         model.addAttribute("employees", employees);
         return "list";
     }
+    @GetMapping("/export")
+    public void exportToCSV(@RequestParam("employeeId") String matricule, HttpServletResponse response) {
+        try {
+            Employee employee = service.getEmployeeByMatricule(matricule);
+
+            List<String> data = new ArrayList<>();
+            data.add("Matricule :," + employee.getMatricule());
+            data.add("Prénom :," + employee.getFirstName());
+            data.add("Nom :," + employee.getLastName());
+            data.add("Anniversaire :," + employee.getBirthDate());
+            data.add("Adresse :," + employee.getAddress());
+            data.add("Fonction :," + employee.getRole());
+            data.add("Date d'embauche :," + employee.getHire());
+            data.add("Email :," + employee.getEmail());
+
+            String fileName = "Fiche_" + employee.getFirstName() + employee.getLastName() + ".csv";
+            response.setContentType("text/csv");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+
+            PrintWriter writer = response.getWriter();
+
+            for (String row : data) {
+                writer.println(row);
+            }
+
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

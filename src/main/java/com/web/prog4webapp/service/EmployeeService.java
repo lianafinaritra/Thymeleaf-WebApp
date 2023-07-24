@@ -26,6 +26,16 @@ public class EmployeeService {
         }
         return new Employee();
     }
+    @Transactional
+
+    public Employee getEmployeeByMatricule(String employee_matricule){
+        Optional<Employee> employee = repository.findEmployeeByMatricule(employee_matricule);
+        if(employee.isPresent()){
+            Employee current = employee.get();
+            return current;
+        }
+        return new Employee();
+    }
 
     public Employee createEmployee(Employee restEmployee){
         return repository.save(restEmployee);
