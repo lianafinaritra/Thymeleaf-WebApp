@@ -1,6 +1,6 @@
 package com.web.prog4webapp.mapper;
 
-import com.web.prog4webapp.controller.model.RestEmployee;
+import com.web.prog4webapp.controller.model.CreateEmployee;
 import com.web.prog4webapp.controller.model.ViewEmployee;
 import com.web.prog4webapp.model.CNAPS;
 import com.web.prog4webapp.model.Employee;
@@ -12,10 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -31,6 +28,7 @@ public class EmployeeMapper {
         CNAPS cnaps = domain.getCnaps();
         List<Phone> phone = domain.getPhone();
         return ViewEmployee.builder()
+                .id(domain.getId())
                 .matricule(domain.getMatricule())
                 .lastName(domain.getLastName())
                 .firstName(domain.getFirstName())
@@ -49,11 +47,45 @@ public class EmployeeMapper {
                 .image(domain.getImage())
                 .build();
     }
-    public Employee toDomain(RestEmployee restEmployee) throws IOException {
+
+    public Employee toDomain(ViewEmployee viewEmployee){
+        Employee newEmployee = new Employee();
+        Optional<Phone> phone = phoneRepository.findPhoneByPhoneNumber(viewEmployee.getPhone());
+        List<Phone> list = new ArrayList<>();
+        Phone newPhone = new Phone();
+       if(phone.isPresent()){
+           list.add(phone.get());
+       } else {
+           Phone phone1 = new Phone();
+           phone1.setPhoneNumber(viewEmployee.getPhone());
+           Phone phone2 = phoneRepository.save(phone1);
+           newPhone.setId(phone2.getId());
+           newPhone.setPhoneNumber(phone2.getPhoneNumber());
+           list.add(newPhone);
+       }
+        return Employee.builder()
+                .id(viewEmployee.getId())
+                .matricule(viewEmployee.getMatricule())
+                .lastName(viewEmployee.getLastName())
+                .firstName(viewEmployee.getFirstName())
+                .birthDate(viewEmployee.getBirthDate())
+                .sex(newEmployee.convertStringToSex(viewEmployee.getSex()))
+                .address(newEmployee.getAddress())
+                .personalEmail(viewEmployee.getPersonalEmail())
+                .email(viewEmployee.getEmail())
+                .role(viewEmployee.getRole())
+                .children(viewEmployee.getChildren())
+                .hire(viewEmployee.getHire())
+                .departure(viewEmployee.getDeparture())
+                .spc(newEmployee.convertStringToSPC(viewEmployee.getSpc()))
+                .phone(list)
+                .build();
+    }
+    public Employee toDomain(CreateEmployee createEmployee) throws IOException {
         String mat = "";
         List<Employee> employees = repository.findAll();
-        Optional<CNAPS> cnaps = cnapsRepository.findCNAPSByCnaps(restEmployee.getCnaps());
-        Optional<Phone> phone = phoneRepository.findPhoneByPhoneNumber(restEmployee.getPhone());
+        Optional<CNAPS> cnaps = cnapsRepository.findCNAPSByCnaps(createEmployee.getCnaps());
+        Optional<Phone> phone = phoneRepository.findPhoneByPhoneNumber(createEmployee.getPhone());
         Employee newEmployee = new Employee();
         if(employees.size() > 0){
             Employee employee = repository.findById(employees.get(employees.size() - 1).getId()).get();
@@ -69,7 +101,7 @@ public class EmployeeMapper {
             newEmployee.setCnaps(cnaps.get());
         }else {
             CNAPS cnaps1 = new CNAPS();
-            cnaps1.setCnaps(restEmployee.getCnaps());
+            cnaps1.setCnaps(createEmployee.getCnaps());
             CNAPS newCnaps = cnapsRepository.save(cnaps1);
             newEmployee.setCnaps(newCnaps);
         }if(phone.isPresent()){
@@ -78,29 +110,29 @@ public class EmployeeMapper {
             newEmployee.setPhone(list);
         }else {
             Phone phone1 = new Phone();
-            phone1.setPhoneNumber(restEmployee.getPhone());
+            phone1.setPhoneNumber(createEmployee.getPhone());
             Phone newPhone = phoneRepository.save(phone1);
             List list = new ArrayList<>();
             list.add(newPhone);
             newEmployee.setPhone(list);
         }
-        MultipartFile file = restEmployee.getImage();
+        MultipartFile file = createEmployee.getImage();
         byte[] bytes = file.getBytes();
         String image = Base64.getEncoder().encodeToString(bytes);
-        newEmployee.setLastName(restEmployee.getLastName());
-        newEmployee.setFirstName(restEmployee.getFirstName());
-        newEmployee.setBirthDate(restEmployee.getBirthDate());
+        newEmployee.setLastName(createEmployee.getLastName());
+        newEmployee.setFirstName(createEmployee.getFirstName());
+        newEmployee.setBirthDate(createEmployee.getBirthDate());
         newEmployee.setImage(image);
         newEmployee.setMatricule(mat);
-        newEmployee.setSex(newEmployee.convertStringToSex(restEmployee.getSex()));
-        newEmployee.setAddress(restEmployee.getAddress());
-        newEmployee.setEmail(restEmployee.getEmail());
-        newEmployee.setPersonalEmail(restEmployee.getPersonalEmail());
-        newEmployee.setRole(restEmployee.getRole());
-        newEmployee.setChildren(restEmployee.getChildren());
-        newEmployee.setHire(restEmployee.getHire());
-        newEmployee.setDeparture(restEmployee.getDeparture());
-        newEmployee.setSpc(newEmployee.convertStringToSPC(restEmployee.getSpc()));
+        newEmployee.setSex(newEmployee.convertStringToSex(createEmployee.getSex()));
+        newEmployee.setAddress(createEmployee.getAddress());
+        newEmployee.setEmail(createEmployee.getEmail());
+        newEmployee.setPersonalEmail(createEmployee.getPersonalEmail());
+        newEmployee.setRole(createEmployee.getRole());
+        newEmployee.setChildren(createEmployee.getChildren());
+        newEmployee.setHire(createEmployee.getHire());
+        newEmployee.setDeparture(createEmployee.getDeparture());
+        newEmployee.setSpc(newEmployee.convertStringToSPC(createEmployee.getSpc()));
         return newEmployee;
     }
 }

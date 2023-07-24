@@ -73,8 +73,13 @@
                 <td th:text="${employee.cnaps}"></td>
             </tr>
             <div class="flex justify-center mt-6">
-                <a th:href="@{/export(employeeId=${employee.matricule})}" class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300">
+                <a th:href="@{/export(employeeId=${employee.id})}" class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300">
                     Export CSV
+                </a>
+            </div>
+            <div class="flex justify-center mt-6">
+                <a th:href="@{/modify(employeeId=${employee.id})}" class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300">
+                    Modifier
                 </a>
             </div>
         </table>

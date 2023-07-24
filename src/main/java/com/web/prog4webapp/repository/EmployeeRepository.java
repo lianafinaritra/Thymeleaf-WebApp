@@ -19,5 +19,4 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
     List<Employee> searchByWord(String word);
 
     List<Employee> findAll(Sort sort);
-    Optional<Employee> findEmployeeByMatricule(String matricule);
 }

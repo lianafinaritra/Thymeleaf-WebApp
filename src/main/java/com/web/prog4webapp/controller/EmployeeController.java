@@ -1,6 +1,6 @@
 package com.web.prog4webapp.controller;
 
-import com.web.prog4webapp.controller.model.RestEmployee;
+import com.web.prog4webapp.controller.model.CreateEmployee;
 import com.web.prog4webapp.controller.model.ViewEmployee;
 import com.web.prog4webapp.mapper.EmployeeMapper;
 import com.web.prog4webapp.model.Employee;
@@ -24,7 +24,7 @@ public class EmployeeController {
     private final EmployeeMapper mapper;
     @GetMapping("/")
     public String FormPage(Model model) {
-        model.addAttribute("employee", RestEmployee.builder().build());
+        model.addAttribute("employee", CreateEmployee.builder().build());
         return "form";
     }
     @GetMapping("/details")
@@ -61,16 +61,30 @@ public class EmployeeController {
     }
 
     @PostMapping("/postEmployee")
-    public String createEmployee(@ModelAttribute("employee") RestEmployee newEmployee, Model model) throws IOException {
-        service.createEmployee(mapper.toDomain(newEmployee));
+    public String createEmployee(@ModelAttribute("employee") CreateEmployee newEmployee, Model model) throws IOException {
+        service.createOrUpdateEmployee(mapper.toDomain(newEmployee));
+        List<Employee> employees = service.getAllEmployees();
+        model.addAttribute("employees", employees);
+        return "list";
+    }
+    @GetMapping("/modify")
+    public String ModificationPage(@RequestParam("employeeId") String id, Model model) throws IOException {
+        Employee emp = service.getEmployeeById(id);
+        ViewEmployee employee = mapper.toRest(emp);
+        model.addAttribute("employee", employee);
+        return "modify";
+    }
+    @PostMapping("/putEmployee")
+    public String updateEmployee(@ModelAttribute("employee") ViewEmployee viewEmployee, Model model) {
+        service.createOrUpdateEmployee(mapper.toDomain(viewEmployee));
         List<Employee> employees = service.getAllEmployees();
         model.addAttribute("employees", employees);
         return "list";
     }
     @GetMapping("/export")
-    public void exportToCSV(@RequestParam("employeeId") String matricule, HttpServletResponse response) {
+    public void exportToCSV(@RequestParam("employeeId") String id, HttpServletResponse response) {
         try {
-            Employee employee = service.getEmployeeByMatricule(matricule);
+            Employee employee = service.getEmployeeById(id);
 
             List<String> data = new ArrayList<>();
             data.add("Matricule :," + employee.getMatricule());

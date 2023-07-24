@@ -13,10 +13,11 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class ViewEmployee implements Serializable {
+    private String id;
     private String matricule;
     private String lastName;
     private String firstName;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     private String image;
     private String sex;
@@ -25,9 +26,9 @@ public class ViewEmployee implements Serializable {
     private String email;
     private String role;
     private int children;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate hire;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate departure;
     private String spc;
     private String cnaps;

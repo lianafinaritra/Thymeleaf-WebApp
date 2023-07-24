@@ -10,10 +10,10 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
-public class RestEmployee implements Serializable {
+public class CreateEmployee implements Serializable {
     private String lastName;
     private String firstName;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     private MultipartFile image;
     private String sex;
@@ -22,9 +22,9 @@ public class RestEmployee implements Serializable {
     private String email;
     private String role;
     private int children;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate hire;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate departure;
     private String spc;
     private String cnaps;

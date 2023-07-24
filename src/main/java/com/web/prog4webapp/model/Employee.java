@@ -26,7 +26,7 @@ public class Employee implements Serializable {
     private String matricule;
     private String lastName;
     private String firstName;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     @Lob
     private String image;
@@ -41,9 +41,9 @@ public class Employee implements Serializable {
     private NIC nic;*/
     private String role;
     private int children;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate hire;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate departure;
     @Enumerated(EnumType.STRING)
     private SPC spc;
