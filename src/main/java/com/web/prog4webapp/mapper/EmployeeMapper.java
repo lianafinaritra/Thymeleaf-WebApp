@@ -24,13 +24,14 @@ public class EmployeeMapper {
     private EmployeeRepository repository;
     private CnapsRepository cnapsRepository;
     private PhoneRepository phoneRepository;
-    public ViewEmployee toRest(Employee domain) throws IOException {
+    public ViewEmployee toRest(Employee domain){
         CNAPS cnaps = domain.getCnaps();
         List<Phone> phone = domain.getPhone();
         return ViewEmployee.builder()
                 .id(domain.getId())
                 .userName(domain.getUserName())
                 .password(domain.getPassword())
+                .sessionId(domain.getSessionId())
                 .matricule(domain.getMatricule())
                 .lastName(domain.getLastName())
                 .firstName(domain.getFirstName())
@@ -78,6 +79,7 @@ public class EmployeeMapper {
                 .id(viewEmployee.getId())
                 .userName(viewEmployee.getUserName())
                 .password(viewEmployee.getPassword())
+                .sessionId(viewEmployee.getSessionId())
                 .image(viewEmployee.getImage())
                 .matricule(viewEmployee.getMatricule())
                 .lastName(viewEmployee.getLastName())

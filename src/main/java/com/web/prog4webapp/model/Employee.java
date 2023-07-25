@@ -25,6 +25,7 @@ public class Employee implements Serializable {
     private String id;
     private String userName;
     private String password;
+    private String sessionId;
     private String matricule;
     private String lastName;
     private String firstName;

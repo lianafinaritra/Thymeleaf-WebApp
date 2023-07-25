@@ -19,4 +19,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
     List<Employee> searchByWord(String word);
 
     List<Employee> findAll(Sort sort);
+    Optional<Employee> findEmployeeByUserNameAndPassword(String userName, String password);
 }

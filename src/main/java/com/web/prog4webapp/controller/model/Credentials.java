@@ -14,5 +14,5 @@ import java.time.LocalDate;
 @Builder
 public class Credentials implements Serializable {
     private String userName;
-    private String passWord;
+    private String password;
 }

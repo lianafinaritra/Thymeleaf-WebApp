@@ -6,216 +6,144 @@
     <link href="/css/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-<section class="bg-gray-50 dark:bg-gray-900">
-    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
-            Flowbite
-        </a>
-        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                    Veuillez entrer vos informations
-                </h1>
-                <form class="space-y-4 md:space-y-6" action="#">
-                    <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom d'utilisateur</label>
-                        <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
-                    </div>
-                    <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de passe</label>
-                        <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                    </div>
-                    <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+<form action="/postCredentials" method="post" th:object="${credentials}">
+    <h3>Connexion</h3>
+
+    <label for="username">Nom d'utilisateur</label>
+    <input type="text" placeholder="John Doe" id="username" th:field="*{userName}">
+
+    <label for="password">Mot de passe</label>
+    <input type="password" placeholder="JohnDoe123" id="password" th:field="*{password}">
+
+    <button type="submit">Se Connecter</button>
+</form>
 </body>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-    * {
-        margin: 0;
+<style media="screen">
+    *,
+    *:before,
+    *:after{
         padding: 0;
+        margin: 0;
         box-sizing: border-box;
     }
-    body {
-        font-family: "Inter", sans-serif;
+    body{
+        background-color: #080710;
     }
-    .formbold-main-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 48px;
+    .background{
+        width: 430px;
+        height: 520px;
+        position: absolute;
+        transform: translate(-50%,-50%);
+        left: 50%;
+        top: 50%;
     }
-
-    .formbold-form-wrapper {
-        margin: 0 auto;
-        max-width: 550px;
-        width: 100%;
-        background: white;
-    }
-
-    .formbold-steps {
-        padding-bottom: 18px;
-        margin-bottom: 35px;
-        border-bottom: 1px solid #DDE3EC;
-    }
-    .formbold-steps ul {
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        display: flex;
-        gap: 40px;
-    }
-    .formbold-steps li {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 24px;
-        color: #536387;
-    }
-    .formbold-steps li span {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #DDE3EC;
+    .background .shape{
+        height: 200px;
+        width: 200px;
+        position: absolute;
         border-radius: 50%;
-        width: 36px;
-        height: 36px;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 24px;
-        color: #536387;
     }
-    .formbold-steps li.active {
-        color: #07074D;;
+    .shape:first-child{
+        background: linear-gradient(
+                #1845ad,
+                #23a2f6
+        );
+        left: -80px;
+        top: -80px;
     }
-    .formbold-steps li.active span {
-        background: #6A64F1;
-        color: #FFFFFF;
+    .shape:last-child{
+        background: linear-gradient(
+                to right,
+                #ff512f,
+                #f09819
+        );
+        right: -30px;
+        bottom: -80px;
     }
-
-    .formbold-input-flex {
-        display: flex;
-        gap: 20px;
-        margin-bottom: 22px;
+    form{
+        height: 520px;
+        width: 400px;
+        background-color: rgba(255,255,255,0.13);
+        position: absolute;
+        transform: translate(-50%,-50%);
+        top: 50%;
+        left: 50%;
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255,255,255,0.1);
+        box-shadow: 0 0 40px rgba(8,7,16,0.6);
+        padding: 50px 35px;
     }
-    .formbold-input-flex > div {
-        width: 50%;
-    }
-    .formbold-form-input {
-        width: 100%;
-        padding: 13px 22px;
-        border-radius: 5px;
-        border: 1px solid #DDE3EC;
-        background: #FFFFFF;
-        font-weight: 500;
-        font-size: 16px;
-        color: #536387;
+    form *{
+        font-family: 'Poppins',sans-serif;
+        color: #ffffff;
+        letter-spacing: 0.5px;
         outline: none;
-        resize: none;
+        border: none;
     }
-    .formbold-form-input:focus {
-        border-color: #6a64f1;
-        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
-    }
-    .formbold-form-label {
-        color: #07074D;
+    form h3{
+        font-size: 32px;
         font-weight: 500;
+        line-height: 42px;
+        text-align: center;
+    }
+
+    label{
+        display: block;
+        margin-top: 30px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+    input{
+        display: block;
+        height: 50px;
+        width: 100%;
+        background-color: rgba(255,255,255,0.07);
+        border-radius: 3px;
+        padding: 0 10px;
+        margin-top: 8px;
         font-size: 14px;
-        line-height: 24px;
-        display: block;
-        margin-bottom: 10px;
+        font-weight: 300;
     }
-
-    .formbold-form-confirm {
-        border-bottom: 1px solid #DDE3EC;
-        padding-bottom: 35px;
+    ::placeholder{
+        color: #e5e5e5;
     }
-    .formbold-form-confirm p {
-        font-size: 16px;
-        line-height: 24px;
-        color: #536387;
-        margin-bottom: 22px;
-        width: 75%;
-    }
-    .formbold-form-confirm > div {
-        display: flex;
-        gap: 15px;
-    }
-
-    .formbold-confirm-btn {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: #FFFFFF;
-        border: 0.5px solid #DDE3EC;
+    button{
+        margin-top: 50px;
+        width: 100%;
+        background-color: #ffffff;
+        color: #080710;
+        padding: 15px 0;
+        font-size: 18px;
+        font-weight: 600;
         border-radius: 5px;
-        font-size: 16px;
-        line-height: 24px;
-        color: #536387;
         cursor: pointer;
-        padding: 10px 20px;
-        transition: all .3s ease-in-out;
     }
-    .formbold-confirm-btn {
-        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.12);
-    }
-    .formbold-confirm-btn.active {
-        background: #6A64F1;
-        color: #FFFFFF;
-    }
-
-    .formbold-form-step-1,
-    .formbold-form-step-2,
-    .formbold-form-step-3 {
-        display: none;
-    }
-    .formbold-form-step-1.active,
-    .formbold-form-step-2.active,
-    .formbold-form-step-3.active {
-        display: block;
-    }
-
-    .formbold-form-btn-wrapper {
+    .social{
+        margin-top: 30px;
         display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 25px;
-        margin-top: 25px;
     }
-    .formbold-back-btn {
-        cursor: pointer;
-        background: #FFFFFF;
-        border: none;
-        color: #07074D;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 24px;
-        display: none;
+    .social div{
+        background: red;
+        width: 150px;
+        border-radius: 3px;
+        padding: 5px 10px 10px 5px;
+        background-color: rgba(255,255,255,0.27);
+        color: #eaf0fb;
+        text-align: center;
     }
-    .formbold-back-btn.active {
-        display: block;
+    .social div:hover{
+        background-color: rgba(255,255,255,0.47);
     }
-    .formbold-btn {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 16px;
-        border-radius: 5px;
-        padding: 10px 25px;
-        border: none;
-        font-weight: 500;
-        background-color: #6A64F1;
-        color: white;
-        cursor: pointer;
+    .social .fb{
+        margin-left: 25px;
     }
-    .formbold-btn:hover {
-        box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    .social i{
+        margin-right: 4px;
     }
 
 </style>

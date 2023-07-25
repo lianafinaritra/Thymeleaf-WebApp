@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @AllArgsConstructor
@@ -31,10 +32,15 @@ public class EmployeeController {
 
     @PostMapping("/postCredentials")
     public String LoginUser(@ModelAttribute("credentials") Credentials credentials, Model model){
-        /*service.createOrUpdateEmployee(mapper.toDomain(newEmployee));
-        List<Employee> employees = service.getAllEmployees();
-        model.addAttribute("employees", employees);*/
-        return "list";
+        Employee employee = service.authenticate(credentials.getUserName(), credentials.getPassword());
+        if(employee != null){
+            String sessionId = UUID.randomUUID().toString();
+            employee.setSessionId(sessionId);
+            model.addAttribute("sessionId", sessionId);
+            return "redirect:/list";
+        }else {
+            return "login";
+        }
     }
 
     @GetMapping("/form")

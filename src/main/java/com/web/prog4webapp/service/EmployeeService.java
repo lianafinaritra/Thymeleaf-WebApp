@@ -5,6 +5,8 @@ import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,5 +48,11 @@ public class EmployeeService {
                 Sort.by(atr).descending();
 
         return repository.findAll(sort);
+    }
+    @Transactional
+
+    public Employee authenticate(String username, String password) {
+        Optional<Employee> employee = repository.findEmployeeByUserNameAndPassword(username, password);
+        return employee.orElse(null);
     }
 }
