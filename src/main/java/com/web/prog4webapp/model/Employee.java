@@ -23,6 +23,8 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    private String userName;
+    private String password;
     private String matricule;
     private String lastName;
     private String firstName;

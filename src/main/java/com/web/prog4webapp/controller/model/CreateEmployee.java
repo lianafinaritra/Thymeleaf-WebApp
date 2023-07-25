@@ -11,6 +11,8 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class CreateEmployee implements Serializable {
+    private String userName;
+    private String password;
     private String lastName;
     private String firstName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

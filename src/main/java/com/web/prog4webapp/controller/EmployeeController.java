@@ -1,6 +1,7 @@
 package com.web.prog4webapp.controller;
 
 import com.web.prog4webapp.controller.model.CreateEmployee;
+import com.web.prog4webapp.controller.model.Credentials;
 import com.web.prog4webapp.controller.model.ViewEmployee;
 import com.web.prog4webapp.mapper.EmployeeMapper;
 import com.web.prog4webapp.model.Employee;
@@ -22,13 +23,21 @@ import java.util.List;
 public class EmployeeController {
     private final EmployeeService service;
     private final EmployeeMapper mapper;
-    @GetMapping("/login")
+    @GetMapping("/")
     public String LoginPage(Model model) {
-        model.addAttribute("employee", CreateEmployee.builder().build());
+        model.addAttribute("credentials", Credentials.builder().build());
         return "login";
     }
 
-    @GetMapping("/")
+    @PostMapping("/postCredentials")
+    public String LoginUser(@ModelAttribute("credentials") Credentials credentials, Model model){
+        /*service.createOrUpdateEmployee(mapper.toDomain(newEmployee));
+        List<Employee> employees = service.getAllEmployees();
+        model.addAttribute("employees", employees);*/
+        return "list";
+    }
+
+    @GetMapping("/form")
     public String FormPage(Model model) {
         model.addAttribute("employee", CreateEmployee.builder().build());
         return "form";

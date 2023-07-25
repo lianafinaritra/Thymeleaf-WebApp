@@ -29,6 +29,8 @@ public class EmployeeMapper {
         List<Phone> phone = domain.getPhone();
         return ViewEmployee.builder()
                 .id(domain.getId())
+                .userName(domain.getUserName())
+                .password(domain.getPassword())
                 .matricule(domain.getMatricule())
                 .lastName(domain.getLastName())
                 .firstName(domain.getFirstName())
@@ -74,6 +76,8 @@ public class EmployeeMapper {
        }
         return Employee.builder()
                 .id(viewEmployee.getId())
+                .userName(viewEmployee.getUserName())
+                .password(viewEmployee.getPassword())
                 .image(viewEmployee.getImage())
                 .matricule(viewEmployee.getMatricule())
                 .lastName(viewEmployee.getLastName())
@@ -130,6 +134,8 @@ public class EmployeeMapper {
         MultipartFile file = createEmployee.getImage();
         byte[] bytes = file.getBytes();
         String image = Base64.getEncoder().encodeToString(bytes);
+        newEmployee.setUserName(createEmployee.getUserName());
+        newEmployee.setPassword(createEmployee.getPassword());
         newEmployee.setLastName(createEmployee.getLastName());
         newEmployee.setFirstName(createEmployee.getFirstName());
         newEmployee.setBirthDate(createEmployee.getBirthDate());

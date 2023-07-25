@@ -1,6 +1,6 @@
 package com.web.prog4webapp.service;
 
-import com.web.prog4webapp.controller.model.ViewEmployee;
+import com.web.prog4webapp.controller.model.Credentials;
 import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
@@ -15,6 +15,9 @@ import java.util.Optional;
 @AllArgsConstructor
 public class EmployeeService {
     private final EmployeeRepository repository;
+    public String getSession(Credentials credentials) {
+        return "true";
+    }
 
     public List<Employee> getAllEmployees() {
         return repository.findAll();

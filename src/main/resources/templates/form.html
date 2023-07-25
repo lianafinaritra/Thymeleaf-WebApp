@@ -46,6 +46,33 @@
 
                 <div class="formbold-input-flex">
                     <div>
+                        <label for="userName" class="formbold-form-label"> Nom d'Utilisateur </label>
+                        <input
+                                type="text"
+                                name="userName"
+                                placeholder="John123"
+                                id="userName"
+                                th:field="*{userName}"
+                                class="formbold-form-input"
+                                required
+                        />
+                    </div>
+                    <div>
+                        <label for="password" class="formbold-form-label"> Mot de Passe </label>
+                        <input
+                                type="text"
+                                name="password"
+                                placeholder="John2023"
+                                id="password"
+                                th:field="*{password}"
+                                class="formbold-form-input"
+                                required
+                        />
+                    </div>
+                </div>
+
+                <div class="formbold-input-flex">
+                    <div>
                         <label for="birthDate" class="formbold-form-label"> Anniversaire </label>
                         <input
                                 type="date"
