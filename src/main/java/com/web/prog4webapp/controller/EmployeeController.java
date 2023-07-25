@@ -5,8 +5,13 @@ import com.web.prog4webapp.controller.model.Credentials;
 import com.web.prog4webapp.controller.model.ViewEmployee;
 import com.web.prog4webapp.mapper.EmployeeMapper;
 import com.web.prog4webapp.model.Employee;
+import com.web.prog4webapp.model.Session;
+import com.web.prog4webapp.repository.SessionRepository;
 import com.web.prog4webapp.service.EmployeeService;
+import com.web.prog4webapp.service.SessionService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +19,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +32,7 @@ import java.util.UUID;
 public class EmployeeController {
     private final EmployeeService service;
     private final EmployeeMapper mapper;
+    private final SessionService sessionService;
     @GetMapping("/")
     public String LoginPage(Model model) {
         model.addAttribute("credentials", Credentials.builder().build());
@@ -31,12 +40,18 @@ public class EmployeeController {
     }
 
     @PostMapping("/postCredentials")
-    public String LoginUser(@ModelAttribute("credentials") Credentials credentials, Model model){
+    public String LoginUser(@ModelAttribute("credentials") Credentials credentials, Model model, HttpServletRequest request){
         Employee employee = service.authenticate(credentials.getUserName(), credentials.getPassword());
         if(employee != null){
-            String sessionId = UUID.randomUUID().toString();
-            employee.setSessionId(sessionId);
-            model.addAttribute("sessionId", sessionId);
+            Session session1 = new Session();
+            session1.setEmployee(employee);
+            Date currentDate = new Date();
+            LocalDate localDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate tomorrow = localDate.plusDays(1);
+            session1.setValidate(tomorrow);
+            Session newSession = sessionService.createOrUpdateSession(session1);
+            HttpSession session = request.getSession();
+            session.setAttribute("sessionId", newSession.getId());
             return "redirect:/list";
         }else {
             return "login";
@@ -71,7 +86,9 @@ public class EmployeeController {
         return "list";
     }
     @GetMapping("/list")
-    public String ListPage(Model model){
+    public String ListPage(Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String sessionId = (String) session.getAttribute("sessionId");
         List<Employee> employees = service.getAllEmployees();
         model.addAttribute("employees", employees);
         return "list";
@@ -117,7 +134,7 @@ public class EmployeeController {
             data.add("Date d'embauche :," + employee.getHire());
             data.add("Email :," + employee.getEmail());
 
-            String fileName = "Fiche_" + employee.getFirstName() + employee.getLastName() + ".csv";
+            String fileName = "Fiche_" + employee.getFirstName() + "_" + employee.getLastName() + ".csv";
             response.setContentType("text/csv");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 
