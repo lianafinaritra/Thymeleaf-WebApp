@@ -63,26 +63,49 @@ public class EmployeeController {
         return "form";
     }
     @GetMapping("/details")
-    public String EmployeePage(@RequestParam("id") String id, Model model) throws IOException {
-        Employee employee = service.getEmployeeById(id);
-        ViewEmployee viewEmployee = mapper.toRest(employee);
-        model.addAttribute("employee", viewEmployee);
-        return "details";
+    public String EmployeePage(@RequestParam("id") String id, Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String sessionId = (String) session.getAttribute("sessionId");
+        Session domainSession = sessionService.getSessionById(sessionId);
+        if (domainSession.getId() != null){
+            Employee employee = service.getEmployeeById(id);
+            ViewEmployee viewEmployee = mapper.toRest(employee);
+            model.addAttribute("employee", viewEmployee);
+            return "details";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/search")
-    public String SearchPage(@RequestParam("word") String word, Model model){
-        List<Employee> employees = service.searchByWord(word);
-        model.addAttribute("employees", employees);
-        return "list";
+    public String SearchPage(@RequestParam("word") String word, Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String sessionId = (String) session.getAttribute("sessionId");
+        Session domainSession = sessionService.getSessionById(sessionId);
+        if (domainSession.getId() != null){
+            List<Employee> employees = service.searchByWord(word);
+            model.addAttribute("employees", employees);
+            model.addAttribute("sessionId", sessionId);
+            return "list";
+        } else {
+            return "redirect:/";
+        }
     }
     @GetMapping("/sort")
     public String SortPage(@RequestParam(value = "sortAttribute", defaultValue = "lastName") String sortAttribute,
                            @RequestParam(value = "sortOrder", defaultValue = "asc") String sortOrder,
-                           Model model) {
-        List<Employee> employees = service.sort(sortOrder, sortAttribute);
-        model.addAttribute("employees", employees);
-        return "list";
+                           Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String sessionId = (String) session.getAttribute("sessionId");
+        Session domainSession = sessionService.getSessionById(sessionId);
+        if (domainSession.getId() != null){
+            List<Employee> employees = service.sort(sortOrder, sortAttribute);
+            model.addAttribute("employees", employees);
+            model.addAttribute("sessionId", sessionId);
+            return "list";
+        } else {
+            return "redirect:/";
+        }
     }
     @GetMapping("/list")
     public String ListPage(Model model, HttpServletRequest request){
@@ -105,11 +128,18 @@ public class EmployeeController {
         return "redirect:/list";
     }
     @GetMapping("/modify")
-    public String ModificationPage(@RequestParam("employeeId") String id, Model model) throws IOException {
-        Employee emp = service.getEmployeeById(id);
-        ViewEmployee employee = mapper.toRest(emp);
-        model.addAttribute("employee", employee);
-        return "modify";
+    public String ModificationPage(@RequestParam("employeeId") String id, Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String sessionId = (String) session.getAttribute("sessionId");
+        Session domainSession = sessionService.getSessionById(sessionId);
+        if (domainSession.getId() != null){
+            Employee emp = service.getEmployeeById(id);
+            ViewEmployee employee = mapper.toRest(emp);
+            model.addAttribute("employee", employee);
+            return "modify";
+        } else {
+            return "redirect:/";
+        }
     }
     @PostMapping("/modifyEmployee")
     public String updateEmployee(@ModelAttribute("employee") ViewEmployee viewEmployee, Model model) {
