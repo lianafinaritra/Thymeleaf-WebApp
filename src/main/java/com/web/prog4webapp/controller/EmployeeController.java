@@ -22,6 +22,12 @@ import java.util.List;
 public class EmployeeController {
     private final EmployeeService service;
     private final EmployeeMapper mapper;
+    @GetMapping("/login")
+    public String LoginPage(Model model) {
+        model.addAttribute("employee", CreateEmployee.builder().build());
+        return "login";
+    }
+
     @GetMapping("/")
     public String FormPage(Model model) {
         model.addAttribute("employee", CreateEmployee.builder().build());
