@@ -1,10 +1,10 @@
 package com.web.prog4webapp.service;
 
-import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.model.Session;
 import com.web.prog4webapp.repository.SessionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -12,6 +12,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SessionService {
     private final SessionRepository repository;
+    @Transactional
     public Session getSessionById(String sessionId) {
         Optional<Session> session = repository.findSessionById(sessionId);
         if(session.isPresent()){

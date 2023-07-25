@@ -6,7 +6,6 @@ import com.web.prog4webapp.controller.model.ViewEmployee;
 import com.web.prog4webapp.mapper.EmployeeMapper;
 import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.model.Session;
-import com.web.prog4webapp.repository.SessionRepository;
 import com.web.prog4webapp.service.EmployeeService;
 import com.web.prog4webapp.service.SessionService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +23,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -40,7 +39,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/postCredentials")
-    public String LoginUser(@ModelAttribute("credentials") Credentials credentials, Model model, HttpServletRequest request){
+    public String LoginUser(@ModelAttribute("credentials") Credentials credentials, HttpServletRequest request){
         Employee employee = service.authenticate(credentials.getUserName(), credentials.getPassword());
         if(employee != null){
             Session session1 = new Session();
@@ -49,8 +48,9 @@ public class EmployeeController {
             LocalDate localDate = currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate tomorrow = localDate.plusDays(1);
             session1.setValidate(tomorrow);
-            Session newSession = sessionService.createOrUpdateSession(session1);
-            HttpSession session = request.getSession();
+            Session session = sessionService.createOrUpdateSession(session1);
+            HttpSession httpSession = request.getSession();
+            httpSession.setAttribute("sessionId", session.getId());
             return "redirect:/list";
         }else {
             return "redirect:/";
@@ -88,20 +88,20 @@ public class EmployeeController {
     public String ListPage(Model model, HttpServletRequest request){
         HttpSession session = request.getSession();
         String sessionId = (String) session.getAttribute("sessionId");
-        List<Employee> employees = service.getAllEmployees();
-        model.addAttribute("employees", employees);
-        model.addAttribute("sessionId", sessionId);
-        return "list";
-    }
-    @GetMapping("/employees")
-    public List<Employee> getAllEmployees() {
-        return service.getAllEmployees();
+        Session domainSession = sessionService.getSessionById(sessionId);
+        if (domainSession.getId() != null){
+            List<Employee> employees = service.getAllEmployees();
+            model.addAttribute("employees", employees);
+            model.addAttribute("sessionId", sessionId);
+            return "list";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/postEmployee")
-    public String createEmployee(@ModelAttribute("employee") CreateEmployee newEmployee, Model model) throws IOException {
+    public String createEmployee(@ModelAttribute("employee") CreateEmployee newEmployee) throws IOException {
         service.createOrUpdateEmployee(mapper.toDomain(newEmployee));
-        List<Employee> employees = service.getAllEmployees();
         return "redirect:/list";
     }
     @GetMapping("/modify")
@@ -118,7 +118,6 @@ public class EmployeeController {
     }
     @PostMapping("/disconnect")
     public String Disconnect(@ModelAttribute("sessionId") String sessionId){
-        System.out.println("sessionId");
         sessionService.disconnect(sessionId);
         return "redirect:/";
     }
