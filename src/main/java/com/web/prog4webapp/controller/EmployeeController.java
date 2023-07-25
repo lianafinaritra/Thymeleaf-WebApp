@@ -74,7 +74,7 @@ public class EmployeeController {
         model.addAttribute("employee", employee);
         return "modify";
     }
-    @PostMapping("/putEmployee")
+    @PostMapping("/modifyEmployee")
     public String updateEmployee(@ModelAttribute("employee") ViewEmployee viewEmployee, Model model) {
         service.createOrUpdateEmployee(mapper.toDomain(viewEmployee));
         List<Employee> employees = service.getAllEmployees();

@@ -53,6 +53,15 @@ public class EmployeeMapper {
         Optional<Phone> phone = phoneRepository.findPhoneByPhoneNumber(viewEmployee.getPhone());
         List<Phone> list = new ArrayList<>();
         Phone newPhone = new Phone();
+        Optional<CNAPS> cnaps = cnapsRepository.findCNAPSByCnaps(viewEmployee.getCnaps());
+        if(cnaps.isPresent()){
+            newEmployee.setCnaps(cnaps.get());
+        }else {
+            CNAPS cnaps1 = new CNAPS();
+            cnaps1.setCnaps(viewEmployee.getCnaps());
+            CNAPS newCnaps = cnapsRepository.save(cnaps1);
+            newEmployee.setCnaps(newCnaps);
+        }
        if(phone.isPresent()){
            list.add(phone.get());
        } else {
@@ -65,12 +74,13 @@ public class EmployeeMapper {
        }
         return Employee.builder()
                 .id(viewEmployee.getId())
+                .image(viewEmployee.getImage())
                 .matricule(viewEmployee.getMatricule())
                 .lastName(viewEmployee.getLastName())
                 .firstName(viewEmployee.getFirstName())
                 .birthDate(viewEmployee.getBirthDate())
                 .sex(newEmployee.convertStringToSex(viewEmployee.getSex()))
-                .address(newEmployee.getAddress())
+                .address(viewEmployee.getAddress())
                 .personalEmail(viewEmployee.getPersonalEmail())
                 .email(viewEmployee.getEmail())
                 .role(viewEmployee.getRole())
@@ -79,6 +89,7 @@ public class EmployeeMapper {
                 .departure(viewEmployee.getDeparture())
                 .spc(newEmployee.convertStringToSPC(viewEmployee.getSpc()))
                 .phone(list)
+                .cnaps(newEmployee.getCnaps())
                 .build();
     }
     public Employee toDomain(CreateEmployee createEmployee) throws IOException {
