@@ -5,8 +5,6 @@ import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +15,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class EmployeeService {
     private final EmployeeRepository repository;
-    public String getSession(Credentials credentials) {
-        return "true";
-    }
 
     public List<Employee> getAllEmployees() {
         return repository.findAll();

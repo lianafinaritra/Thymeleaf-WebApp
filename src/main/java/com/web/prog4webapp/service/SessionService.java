@@ -1,16 +1,11 @@
 package com.web.prog4webapp.service;
 
-import com.web.prog4webapp.controller.model.Credentials;
 import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.model.Session;
-import com.web.prog4webapp.repository.EmployeeRepository;
 import com.web.prog4webapp.repository.SessionRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,5 +22,12 @@ public class SessionService {
 
     public Session createOrUpdateSession(Session restSession){
         return repository.save(restSession);
+    }
+    public void disconnect(String sessionId) {
+        Optional<Session> session = repository.findById(sessionId);
+        if(session.isPresent()){
+            repository.delete(session.get());
+            System.out.println("Disconnected");
+        }
     }
 }

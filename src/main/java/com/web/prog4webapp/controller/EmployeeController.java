@@ -51,10 +51,9 @@ public class EmployeeController {
             session1.setValidate(tomorrow);
             Session newSession = sessionService.createOrUpdateSession(session1);
             HttpSession session = request.getSession();
-            session.setAttribute("sessionId", newSession.getId());
             return "redirect:/list";
         }else {
-            return "login";
+            return "redirect:/";
         }
     }
 
@@ -91,6 +90,7 @@ public class EmployeeController {
         String sessionId = (String) session.getAttribute("sessionId");
         List<Employee> employees = service.getAllEmployees();
         model.addAttribute("employees", employees);
+        model.addAttribute("sessionId", sessionId);
         return "list";
     }
     @GetMapping("/employees")
@@ -102,8 +102,7 @@ public class EmployeeController {
     public String createEmployee(@ModelAttribute("employee") CreateEmployee newEmployee, Model model) throws IOException {
         service.createOrUpdateEmployee(mapper.toDomain(newEmployee));
         List<Employee> employees = service.getAllEmployees();
-        model.addAttribute("employees", employees);
-        return "list";
+        return "redirect:/list";
     }
     @GetMapping("/modify")
     public String ModificationPage(@RequestParam("employeeId") String id, Model model) throws IOException {
@@ -115,9 +114,13 @@ public class EmployeeController {
     @PostMapping("/modifyEmployee")
     public String updateEmployee(@ModelAttribute("employee") ViewEmployee viewEmployee, Model model) {
         service.createOrUpdateEmployee(mapper.toDomain(viewEmployee));
-        List<Employee> employees = service.getAllEmployees();
-        model.addAttribute("employees", employees);
-        return "list";
+        return "redirect:/list";
+    }
+    @PostMapping("/disconnect")
+    public String Disconnect(@ModelAttribute("sessionId") String sessionId){
+        System.out.println("sessionId");
+        sessionService.disconnect(sessionId);
+        return "redirect:/";
     }
     @GetMapping("/export")
     public void exportToCSV(@RequestParam("employeeId") String id, HttpServletResponse response) {
@@ -150,5 +153,4 @@ public class EmployeeController {
             e.printStackTrace();
         }
     }
-
 }
