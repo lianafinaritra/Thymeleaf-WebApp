@@ -1,11 +1,14 @@
 package com.web.prog4webapp.controller;
 
+import com.web.prog4webapp.controller.model.CreateCompany;
 import com.web.prog4webapp.controller.model.CreateEmployee;
 import com.web.prog4webapp.controller.model.Credentials;
 import com.web.prog4webapp.controller.model.ViewEmployee;
 import com.web.prog4webapp.mapper.EmployeeMapper;
+import com.web.prog4webapp.model.Company;
 import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.model.Session;
+import com.web.prog4webapp.service.CompanyService;
 import com.web.prog4webapp.service.EmployeeService;
 import com.web.prog4webapp.service.SessionService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +26,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -32,6 +34,7 @@ public class EmployeeController {
     private final EmployeeService service;
     private final EmployeeMapper mapper;
     private final SessionService sessionService;
+    private final CompanyService companyService;
     @GetMapping("/")
     public String LoginPage(Model model) {
         model.addAttribute("credentials", Credentials.builder().build());
@@ -67,10 +70,12 @@ public class EmployeeController {
         HttpSession session = request.getSession();
         String sessionId = (String) session.getAttribute("sessionId");
         Session domainSession = sessionService.getSessionById(sessionId);
+        Company company = companyService.getCompanyConfiguration();
         if (domainSession.getId() != null){
             Employee employee = service.getEmployeeById(id);
             ViewEmployee viewEmployee = mapper.toRest(employee);
             model.addAttribute("employee", viewEmployee);
+            model.addAttribute("company", company);
             return "details";
         } else {
             return "redirect:/";
@@ -126,6 +131,22 @@ public class EmployeeController {
     public String createEmployee(@ModelAttribute("employee") CreateEmployee newEmployee) throws IOException {
         service.createOrUpdateEmployee(mapper.toDomain(newEmployee));
         return "redirect:/list";
+    }
+
+    @PostMapping("/company")
+    public Company createCompany(@RequestParam String name, @RequestParam String description, @RequestParam String slogan,@RequestParam String address,@RequestParam String email,@RequestParam String phone,@RequestParam String nif,@RequestParam String stat,@RequestParam String rcs){
+        CreateCompany company = CreateCompany.builder()
+                .name(name)
+                .description(description)
+                .slogan(slogan)
+                .address(address)
+                .email(email)
+                .phone(phone)
+                .nif(nif)
+                .stat(stat)
+                .rcs(rcs)
+                .build();
+        return companyService.createCompanyConfiguration(mapper.toDomain(company));
     }
     @GetMapping("/modify")
     public String ModificationPage(@RequestParam("employeeId") String id, Model model, HttpServletRequest request){

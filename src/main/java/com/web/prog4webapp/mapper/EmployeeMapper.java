@@ -1,8 +1,10 @@
 package com.web.prog4webapp.mapper;
 
+import com.web.prog4webapp.controller.model.CreateCompany;
 import com.web.prog4webapp.controller.model.CreateEmployee;
 import com.web.prog4webapp.controller.model.ViewEmployee;
 import com.web.prog4webapp.model.CNAPS;
+import com.web.prog4webapp.model.Company;
 import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.model.Phone;
 import com.web.prog4webapp.repository.CnapsRepository;
@@ -151,5 +153,27 @@ public class EmployeeMapper {
         newEmployee.setDeparture(createEmployee.getDeparture());
         newEmployee.setSpc(newEmployee.convertStringToSPC(createEmployee.getSpc()));
         return newEmployee;
+    }
+
+    public Company toDomain(CreateCompany createCompany){
+        Optional<Phone> phone = phoneRepository.findPhoneByPhoneNumber(createCompany.getPhone());
+        Company newCompany = new Company();
+        if(phone.isPresent()){
+            newCompany.setPhone(phone.get());
+        }else {
+            Phone phone1 = new Phone();
+            phone1.setPhoneNumber(createCompany.getPhone());
+            Phone newPhone = phoneRepository.save(phone1);
+            newCompany.setPhone(newPhone);
+        }
+        newCompany.setName(createCompany.getName());
+        newCompany.setDescription(createCompany.getDescription());
+        newCompany.setSlogan(createCompany.getSlogan());
+        newCompany.setAddress(createCompany.getAddress());
+        newCompany.setEmail(createCompany.getEmail());
+        newCompany.setNif(createCompany.getNif());
+        newCompany.setStat(createCompany.getStat());
+        newCompany.setRcs(createCompany.getRcs());
+        return newCompany;
     }
 }

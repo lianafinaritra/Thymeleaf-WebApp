@@ -72,6 +72,18 @@
                 <td class="font-bold pr-2">Numéro CNAPS :</td>
                 <td th:text="${employee.cnaps}"></td>
             </tr>
+            <tr>
+                <td class="font-bold pr-2">Société :</td>
+                <td th:text="${company.name}"></td>
+            </tr>
+            <tr>
+                <td class="font-bold pr-2">Adresse de la société :</td>
+                <td th:text="${company.address}"></td>
+            </tr>
+            <tr>
+                <td class="font-bold pr-2">Email de la société :</td>
+                <td th:text="${company.email}"></td>
+            </tr>
             <div class="flex justify-center mt-6">
                 <a th:href="@{/export(employeeId=${employee.id})}" class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300">
                     Export CSV
