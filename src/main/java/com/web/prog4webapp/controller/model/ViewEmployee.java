@@ -1,5 +1,6 @@
 package com.web.prog4webapp.controller.model;
 
+import com.web.prog4webapp.model.Phone;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,5 +36,5 @@ public class ViewEmployee implements Serializable {
     private LocalDate departure;
     private String spc;
     private String cnaps;
-    private String phone;
+    private List<String> phone;
 }

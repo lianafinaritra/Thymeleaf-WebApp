@@ -129,6 +129,7 @@ public class EmployeeController {
 
     @PostMapping("/postEmployee")
     public String createEmployee(@ModelAttribute("employee") CreateEmployee newEmployee) throws IOException {
+        System.out.println(newEmployee.getPhone());
         service.createOrUpdateEmployee(mapper.toDomain(newEmployee));
         return "redirect:/list";
     }

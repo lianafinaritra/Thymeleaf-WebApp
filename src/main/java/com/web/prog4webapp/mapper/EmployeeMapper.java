@@ -28,7 +28,11 @@ public class EmployeeMapper {
     private PhoneRepository phoneRepository;
     public ViewEmployee toRest(Employee domain){
         CNAPS cnaps = domain.getCnaps();
-        List<Phone> phone = domain.getPhone();
+        List list = new ArrayList<>();
+        List<Phone> phones = domain.getPhone();
+        for (Phone phone : phones) {
+            list.add(phone.getPhoneNumber());
+        }
         return ViewEmployee.builder()
                 .id(domain.getId())
                 .userName(domain.getUserName())
@@ -47,16 +51,13 @@ public class EmployeeMapper {
                 .departure(domain.getDeparture())
                 .spc(String.valueOf(domain.getSpc()))
                 .cnaps(cnaps.getCnaps())
-                .phone(phone.get(0).getPhoneNumber())
+                .phone(list)
                 .image(domain.getImage())
                 .build();
     }
 
     public Employee toDomain(ViewEmployee viewEmployee){
         Employee newEmployee = new Employee();
-        Optional<Phone> phone = phoneRepository.findPhoneByPhoneNumber(viewEmployee.getPhone());
-        List<Phone> list = new ArrayList<>();
-        Phone newPhone = new Phone();
         Optional<CNAPS> cnaps = cnapsRepository.findCNAPSByCnaps(viewEmployee.getCnaps());
         if(cnaps.isPresent()){
             newEmployee.setCnaps(cnaps.get());
@@ -66,16 +67,20 @@ public class EmployeeMapper {
             CNAPS newCnaps = cnapsRepository.save(cnaps1);
             newEmployee.setCnaps(newCnaps);
         }
-       if(phone.isPresent()){
-           list.add(phone.get());
-       } else {
-           Phone phone1 = new Phone();
-           phone1.setPhoneNumber(viewEmployee.getPhone());
-           Phone phone2 = phoneRepository.save(phone1);
-           newPhone.setId(phone2.getId());
-           newPhone.setPhoneNumber(phone2.getPhoneNumber());
-           list.add(newPhone);
-       }
+        List list = new ArrayList<>();
+        List<String> phones = viewEmployee.getPhone();
+        for (String phoneNumber : phones) {
+            Optional<Phone> phoneOptional = phoneRepository.findPhoneByPhoneNumber(phoneNumber);
+
+            if (phoneOptional.isPresent()) {
+                list.add(phoneOptional.get());
+            } else {
+                Phone newPhone = new Phone();
+                newPhone.setPhoneNumber(phoneNumber);
+                Phone savedPhone = phoneRepository.save(newPhone);
+                list.add(savedPhone);
+            }
+        }
         return Employee.builder()
                 .id(viewEmployee.getId())
                 .userName(viewEmployee.getUserName())
@@ -102,8 +107,21 @@ public class EmployeeMapper {
         String mat = "";
         List<Employee> employees = repository.findAll();
         Optional<CNAPS> cnaps = cnapsRepository.findCNAPSByCnaps(createEmployee.getCnaps());
-        Optional<Phone> phone = phoneRepository.findPhoneByPhoneNumber(createEmployee.getPhone());
         Employee newEmployee = new Employee();
+        List list = new ArrayList<>();
+        List<String> phones = createEmployee.getPhone();
+        for (String phoneNumber : phones) {
+            Optional<Phone> phoneOptional = phoneRepository.findPhoneByPhoneNumber(phoneNumber);
+
+            if (phoneOptional.isPresent()) {
+                list.add(phoneOptional.get());
+            } else {
+                Phone newPhone = new Phone();
+                newPhone.setPhoneNumber(phoneNumber);
+                Phone savedPhone = phoneRepository.save(newPhone);
+                list.add(savedPhone);
+            }
+        }
         if(employees.size() > 0){
             Employee employee = repository.findById(employees.get(employees.size() - 1).getId()).get();
             String current = employee.getMatricule();
@@ -121,17 +139,6 @@ public class EmployeeMapper {
             cnaps1.setCnaps(createEmployee.getCnaps());
             CNAPS newCnaps = cnapsRepository.save(cnaps1);
             newEmployee.setCnaps(newCnaps);
-        }if(phone.isPresent()){
-            List list = new ArrayList<>();
-            list.add(phone.get());
-            newEmployee.setPhone(list);
-        }else {
-            Phone phone1 = new Phone();
-            phone1.setPhoneNumber(createEmployee.getPhone());
-            Phone newPhone = phoneRepository.save(phone1);
-            List list = new ArrayList<>();
-            list.add(newPhone);
-            newEmployee.setPhone(list);
         }
         MultipartFile file = createEmployee.getImage();
         byte[] bytes = file.getBytes();
@@ -152,6 +159,7 @@ public class EmployeeMapper {
         newEmployee.setHire(createEmployee.getHire());
         newEmployee.setDeparture(createEmployee.getDeparture());
         newEmployee.setSpc(newEmployee.convertStringToSPC(createEmployee.getSpc()));
+        newEmployee.setPhone(list);
         return newEmployee;
     }
 

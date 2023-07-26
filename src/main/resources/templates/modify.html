@@ -25,6 +25,7 @@
                 <input type="hidden" th:field="*{matricule}" />
                 <input type="hidden" th:field="*{userName}" />
                 <input type="hidden" th:field="*{password}" />
+                <input type="hidden" th:field="*{phone}" />
                 <div class="formbold-input-flex">
                     <div>
                         <label for="lastName" class="formbold-form-label"> Nom </label>
@@ -83,19 +84,6 @@
                         placeholder="LOT XXX Antananarivo MADAGASCAR"
                             class="formbold-form-input"
                             th:field="*{address}"
-                            required
-                    />
-                </div>
-
-                <div>
-                    <label for="phone" class="formbold-form-label"> Téléphone </label>
-                    <input
-                            type="text"
-                            name="phone"
-                            id="phone"
-                            placeholder="03X XX XXX XX"
-                            class="formbold-form-input"
-                            th:field="*{phone}"
                             required
                     />
                 </div>

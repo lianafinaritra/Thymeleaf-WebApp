@@ -9,6 +9,7 @@
 <div class="formbold-main-wrapper">
     <div class="formbold-form-wrapper">
         <form action="/postEmployee" method="post" th:object="${employee}" enctype="multipart/form-data">
+            <input type="hidden" th:attr="value=${phoneList}" th:name="phoneList" />
             <div class="formbold-steps">
                 <ul>
                     <li class="formbold-step-menu1 active">
@@ -106,17 +107,21 @@
                     />
                 </div>
 
-                <div>
-                    <label for="phone" class="formbold-form-label"> Téléphone </label>
+                <div th:each="phoneNumber : ${employee.phone}">
+                    <input type="text" th:value="${phoneNumber}" th:field="*{phone}" class="formbold-form-input" required/>
+                </div>
+
+                <div id="phoneContainer">
+                    <label for="phone" class="formbold-form-label">Téléphone</label>
                     <input
                             type="text"
                             name="phone"
                             id="phone"
                             placeholder="03X XX XXX XX"
                             class="formbold-form-input"
-                            th:field="*{phone}"
                             required
                     />
+                    <button class="formbold-btn" type="button" onclick="addPhone()">Ajouter</button>
                 </div>
             </div>
 
@@ -244,6 +249,29 @@
     </div>
 </div>
 </body>
+<script>
+    const phoneList = /*[[${employee.phone}]]*/ [];
+
+    function addPhone() {
+        const phoneInput = document.getElementById("phone");
+        const phoneContainer = document.getElementById("phoneContainer");
+
+        const newPhoneInput = document.createElement("input");
+        newPhoneInput.type = "text";
+        newPhoneInput.name = "phone";
+        newPhoneInput.placeholder = "03X XX XXX XX";
+        newPhoneInput.classList.add("formbold-form-input");
+        newPhoneInput.required = true;
+
+        newPhoneInput.value = phoneInput.value;
+        phoneList.push(phoneInput.value);
+
+        phoneContainer.appendChild(newPhoneInput);
+
+        phoneInput.value = "";
+    }
+
+</script>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     * {

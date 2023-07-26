@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,5 +31,5 @@ public class CreateEmployee implements Serializable {
     private LocalDate departure;
     private String spc;
     private String cnaps;
-    private String phone;
+    private List<String> phone;
 }
