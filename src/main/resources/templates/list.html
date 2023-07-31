@@ -6,27 +6,39 @@
     <link href="/css/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="flex justify-center items-center h-screen bg-gray-100">
+<div class="flex justify-center items-center h-screen bg-gray-100 flex-col w-screen">
+    <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6 w-screen h-16"> <!-- Added 'h-16' to specify the height of the navbar -->
+        <div class="flex items-center flex-shrink-0 text-white mr-6">
+            <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
+            <span class="font-semibold text-xl tracking-tight">Liana Finaritra Corporation</span>
+        </div>
+        <div class="block lg:hidden">
+            <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+                <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+            </button>
+        </div>
+    </nav>
+
     <div class="w-4/5 bg-white shadow-md rounded-lg p-6 h-screen">
         <div class="flex flex-col mt-8">
             <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
                 <div class="py-2 align-middle inline-block min-w-full space-y-4">
-                    <div class="formbold-input-flex">
+                    <div class="formbold-input-flex flex space-x-4">
                         <div>
-                        <form th:action="@{/form}" method="get">
-                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white font-medium rounded-lg py-2 px-4 sm:text-sm">
-                                Créer un employé
-                            </button>
-                        </form>
+                            <form th:action="@{/form}" method="get">
+                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white font-medium rounded-lg py-2 px-4 sm:text-sm">
+                                    Créer un employé
+                                </button>
+                            </form>
                         </div>
                         <div>
-                        <form th:action="@{/disconnect}" method="post">
-                            <input type="hidden" name="sessionId" th:value="${sessionId}" />
+                            <form th:action="@{/disconnect}" method="post">
+                                <input type="hidden" name="sessionId" th:value="${sessionId}" />
 
-                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white font-medium rounded-lg py-2 px-4 sm:text-sm">
-                                Deconnecter
-                            </button>
-                        </form>
+                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white font-medium rounded-lg py-2 px-4 sm:text-sm">
+                                    Deconnecter
+                                </button>
+                            </form>
                         </div>
                     </div>
                     <form action="/search" method="get" class="flex items-center w-1/2">

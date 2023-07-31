@@ -113,14 +113,23 @@
 
                 <div id="phoneContainer">
                     <label for="phone" class="formbold-form-label">Téléphone</label>
-                    <input
-                            type="text"
-                            name="phone"
-                            id="phone"
-                            placeholder="03X XX XXX XX"
-                            class="formbold-form-input"
-                            required
-                    />
+                    <div class="flex flex-row w-full mb-6">
+                        <select id="code" name="code" class="formbold-form-code">
+                            <option value="+261">+261</option>
+                            <option value="+33">+33</option>
+                            <option value="+355">+355</option>
+                            <option value="+93">+93</option>
+                            <option value="+27">+27</option>
+                            <option value="+1">+1</option>
+                        </select>
+                        <input
+                                type="text"
+                                name="phone"
+                                id="phone"
+                                placeholder="XX XX XXX XX"
+                                class="formbold-form-input w-2/3"
+                        />
+                    </div>
                     <button class="formbold-btn" type="button" onclick="addPhone()">Ajouter</button>
                 </div>
             </div>
@@ -217,7 +226,7 @@
                 </div>
                 <div class="formbold-input-select-wrapper">
                     <label for="spc" class="formbold-form-label"> Catégorie Socio-professionnelle </label>
-                    <select id="spc" name="spc" class="formbold-form-input">
+                    <select id="spc" name="spc" class="formbold-form-input" th:field="*{spc}">
                         <option th:selected="${employee.spc == 'M1'}" value="M1">M1</option>
                         <option th:selected="${employee.spc == 'M2'}" value="M2">M2</option>
                         <option th:selected="${employee.spc == 'OS1'}" value="OS1">OS1</option>
@@ -254,16 +263,18 @@
 
     function addPhone() {
         const phoneInput = document.getElementById("phone");
+        const phoneSelect = document.getElementById("code");
         const phoneContainer = document.getElementById("phoneContainer");
 
         const newPhoneInput = document.createElement("input");
         newPhoneInput.type = "text";
         newPhoneInput.name = "phone";
-        newPhoneInput.placeholder = "03X XX XXX XX";
+        newPhoneInput.placeholder = "XX XX XXX XX";
         newPhoneInput.classList.add("formbold-form-input");
         newPhoneInput.required = true;
 
-        newPhoneInput.value = phoneInput.value;
+        const selectedCode = phoneSelect.options[phoneSelect.selectedIndex].value;
+        newPhoneInput.value = selectedCode + " " + phoneInput.value;
         phoneList.push(phoneInput.value);
 
         phoneContainer.appendChild(newPhoneInput);
@@ -288,7 +299,6 @@
         justify-content: center;
         padding: 48px;
     }
-
     .formbold-form-wrapper {
         margin: 0 auto;
         max-width: 550px;
@@ -345,6 +355,18 @@
     }
     .formbold-input-flex > div {
         width: 50%;
+    }
+    .formbold-form-code {
+        width: 30%;
+        padding: 13px 22px;
+        border-radius: 5px;
+        border: 1px solid #DDE3EC;
+        background: #FFFFFF;
+        font-weight: 500;
+        font-size: 16px;
+        color: #536387;
+        outline: none;
+        resize: none;
     }
     .formbold-form-input {
         width: 100%;
