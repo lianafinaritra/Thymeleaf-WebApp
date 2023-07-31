@@ -96,6 +96,21 @@ public class EmployeeController {
             return "redirect:/";
         }
     }
+
+    @GetMapping("/searchBySex")
+    public String SearchBySex(@RequestParam("sex") String sex, Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String sessionId = (String) session.getAttribute("sessionId");
+        Session domainSession = sessionService.getSessionById(sessionId);
+        if (domainSession.getId() != null){
+            List<Employee> employees = service.searchBySex(sex);
+            model.addAttribute("employees", employees);
+            model.addAttribute("sessionId", sessionId);
+            return "list";
+        } else {
+            return "redirect:/";
+        }
+    }
     @GetMapping("/sort")
     public String SortPage(@RequestParam(value = "sortAttribute", defaultValue = "lastName") String sortAttribute,
                            @RequestParam(value = "sortOrder", defaultValue = "asc") String sortOrder,

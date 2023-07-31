@@ -38,6 +38,9 @@ public class EmployeeService {
         return repository.searchByWord(word);
     }
 
+     @Transactional
+     public List<Employee> searchBySex(String sex) {return repository.searchBySex(sex);}
+
     public List<Employee> sort(String sortOrder, String atr) {
         Sort sort = sortOrder.equalsIgnoreCase("asc") ? Sort.by(atr).ascending() :
                 Sort.by(atr).descending();

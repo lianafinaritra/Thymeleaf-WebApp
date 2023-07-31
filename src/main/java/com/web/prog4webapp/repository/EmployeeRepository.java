@@ -13,10 +13,14 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
     @Query(value = "SELECT * FROM employee " +
             "WHERE (LOWER(last_name) LIKE LOWER(CONCAT('%', :word, '%')) " +
             "OR LOWER(first_name) LIKE LOWER(CONCAT('%', :word, '%')) " +
-            "OR sex = :word " +
             "OR LOWER(role) LIKE LOWER(CONCAT('%', :word, '%')))",
             nativeQuery = true)
     List<Employee> searchByWord(String word);
+
+    @Query(value = "SELECT * FROM employee " +
+            "WHERE sex = :word ",
+            nativeQuery = true)
+    List<Employee> searchBySex(String word);
 
     List<Employee> findAll(Sort sort);
     Optional<Employee> findEmployeeByUserNameAndPassword(String userName, String password);
