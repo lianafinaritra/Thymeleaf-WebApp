@@ -10,6 +10,7 @@ import com.web.prog4webapp.model.Phone;
 import com.web.prog4webapp.repository.CnapsRepository;
 import com.web.prog4webapp.repository.EmployeeRepository;
 import com.web.prog4webapp.repository.PhoneRepository;
+import com.web.prog4webapp.validator.exception.BadRequestException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -73,7 +74,7 @@ public class EmployeeMapper {
             Optional<Phone> phoneOptional = phoneRepository.findPhoneByPhoneNumber(phoneNumber);
 
             if (phoneOptional.isPresent()) {
-                list.add(phoneOptional.get());
+                throw new BadRequestException("Ce numéro a déjà été déjà utilisé" + phoneOptional);
             } else {
                 Phone newPhone = new Phone();
                 newPhone.setPhoneNumber(phoneNumber);
@@ -114,7 +115,7 @@ public class EmployeeMapper {
             Optional<Phone> phoneOptional = phoneRepository.findPhoneByPhoneNumber(phoneNumber);
 
             if (phoneOptional.isPresent()) {
-                list.add(phoneOptional.get());
+                throw new BadRequestException("Ce numéro a déjà été déjà utilisé" + phoneOptional);
             } else {
                 Phone newPhone = new Phone();
                 newPhone.setPhoneNumber(phoneNumber);
@@ -133,7 +134,7 @@ public class EmployeeMapper {
             mat = "EMP14001";
         }
         if(cnaps.isPresent()){
-            newEmployee.setCnaps(cnaps.get());
+            throw new BadRequestException("Ce numéro a déjà été déjà utilisé");
         }else {
             CNAPS cnaps1 = new CNAPS();
             cnaps1.setCnaps(createEmployee.getCnaps());
@@ -167,7 +168,7 @@ public class EmployeeMapper {
         Optional<Phone> phone = phoneRepository.findPhoneByPhoneNumber(createCompany.getPhone());
         Company newCompany = new Company();
         if(phone.isPresent()){
-            newCompany.setPhone(phone.get());
+            throw new BadRequestException("Ce numéro a déjà été déjà utilisé");
         }else {
             Phone phone1 = new Phone();
             phone1.setPhoneNumber(createCompany.getPhone());

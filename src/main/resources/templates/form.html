@@ -112,7 +112,7 @@
                 </div>
 
                 <div id="phoneContainer">
-                    <label for="phone" class="formbold-form-label">Téléphone</label>
+                    <label for="phoneInput" class="formbold-form-label">Téléphone</label>
                     <div class="flex flex-row w-full mb-6">
                         <select id="code" name="code" class="formbold-form-code">
                             <option value="+261">+261</option>
@@ -124,14 +124,14 @@
                         </select>
                         <input
                                 type="text"
-                                name="phone"
-                                id="phone"
+                                id="phoneInput"
                                 placeholder="XX XX XXX XX"
                                 class="formbold-form-input w-2/3"
                         />
                     </div>
                     <button class="formbold-btn" type="button" onclick="addPhone()">Ajouter</button>
                 </div>
+
             </div>
 
             <div class="formbold-input-flex">
@@ -178,6 +178,7 @@
                     <label for="children" class="formbold-form-label"> Nombres d'enfants à charge </label>
                     <input
                             type="number"
+                            min={0}
                             name="children"
                             placeholder="XXXX@gmail.com"
                             id="children"
@@ -262,7 +263,7 @@
     const phoneList = /*[[${employee.phone}]]*/ [];
 
     function addPhone() {
-        const phoneInput = document.getElementById("phone");
+        const phoneInput = document.getElementById("phoneInput");
         const phoneSelect = document.getElementById("code");
         const phoneContainer = document.getElementById("phoneContainer");
 
@@ -275,7 +276,7 @@
 
         const selectedCode = phoneSelect.options[phoneSelect.selectedIndex].value;
         newPhoneInput.value = selectedCode + " " + phoneInput.value;
-        phoneList.push(phoneInput.value);
+        phoneList.push(selectedCode + " " + phoneInput.value);
 
         phoneContainer.appendChild(newPhoneInput);
 
