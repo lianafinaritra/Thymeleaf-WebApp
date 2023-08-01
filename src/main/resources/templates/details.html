@@ -1,101 +1,178 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A propos</title>
-    <link href="/css/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="flex justify-center items-center h-screen bg-gray-100">
-    <div class="w-3/4 p-8 bg-white rounded-lg shadow-lg">
-        <div class="flex justify-center mb-8">
-            <img th:src="@{'data:image/jpeg;base64,' + ${employee.image}}" alt="Aucune image" class="w-32 h-32 rounded-full shadow-lg">
-        </div>
-        <table class="w-full table-fixed">
+<div class="employee-card">
+    <div class="profile-image">
+        <img th:src="@{'data:image/jpeg;base64,' + ${employee.image}}" alt="Aucune image" class="profile-image__img">
+    </div>
+    <div class="profile-info">
+        <table>
             <tr>
-                <td class="font-bold pr-2 w-1/4">Matricule :</td>
-                <td th:text="${employee.matricule}" class="w-3/4"></td>
+                <td class="font-bold">Matricule:</td>
+                <td th:text="${employee.matricule}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Prénom :</td>
+                <td class="font-bold">Prénom:</td>
                 <td th:text="${employee.firstName}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Nom :</td>
+                <td class="font-bold">Nom:</td>
                 <td th:text="${employee.lastName}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Date de naissance :</td>
+                <td class="font-bold">Date de naissance:</td>
                 <td th:text="${employee.birthDate}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Sexe :</td>
+                <td class="font-bold">Sexe:</td>
                 <td th:text="${employee.sex}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Adresse :</td>
+                <td class="font-bold">Adresse:</td>
                 <td th:text="${employee.address}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Téléphone :</td>
+                <td class="font-bold">Téléphone:</td>
                 <td th:text="${employee.phone}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Email Personnel :</td>
+                <td class="font-bold">Email Personnel:</td>
                 <td th:text="${employee.personalEmail}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Email Professionnel :</td>
+                <td class="font-bold">Email Professionnel:</td>
                 <td th:text="${employee.email}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Fonction :</td>
+                <td class="font-bold">Fonction:</td>
                 <td th:text="${employee.role}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Nombre d'enfants à charge :</td>
+                <td class="font-bold">Nombre d'enfants à charge:</td>
                 <td th:text="${employee.children}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Date d'embauche :</td>
+                <td class="font-bold">Date d'embauche:</td>
                 <td th:text="${employee.hire}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Date de départ :</td>
+                <td class="font-bold">Date de départ:</td>
                 <td th:text="${employee.departure}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Catégorie socio-professionnelle :</td>
+                <td class="font-bold">Catégorie socio-professionnelle:</td>
                 <td th:text="${employee.spc}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Numéro CNAPS :</td>
+                <td class="font-bold">Numéro CNAPS:</td>
                 <td th:text="${employee.cnaps}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Société :</td>
+                <td class="font-bold">Société:</td>
                 <td th:text="${company.name}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Adresse de la société :</td>
+                <td class="font-bold">Adresse de la société:</td>
                 <td th:text="${company.address}"></td>
             </tr>
             <tr>
-                <td class="font-bold pr-2">Email de la société :</td>
+                <td class="font-bold">Email de la société:</td>
                 <td th:text="${company.email}"></td>
             </tr>
-            <div class="flex justify-center mt-6">
-                <a th:href="@{/export(employeeId=${employee.id})}" class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300">
-                    Export CSV
-                </a>
-            </div>
-            <div class="flex justify-center mt-6">
-                <a th:href="@{/modify(employeeId=${employee.id})}" class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300">
-                    Modifier
-                </a>
-            </div>
         </table>
+    </div>
+    <div class="buttons">
+        <a th:href="@{/export(employeeId=${employee.id})}" class="btn-export">
+            Export CSV
+        </a>
+        <a th:href="@{/modify(employeeId=${employee.id})}" class="btn-modify">
+            Modifier
+        </a>
     </div>
 </div>
 </body>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+    }
+
+    .employee-card {
+        width: 90%;
+        max-width: 800px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .profile-image__img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 0 auto 20px;
+        display: block;
+    }
+
+    .profile-info {
+        font-size: 18px;
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .profile-info table {
+        width: 100%;
+    }
+
+    .profile-info td {
+        padding: 8px 0;
+    }
+
+    .font-bold {
+        font-weight: bold;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-export,
+    .btn-modify {
+        padding: 12px 24px;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #1abc9c;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-decoration: none;
+        margin: 5px;
+    }
+
+    .btn-export:hover,
+    .btn-modify:hover {
+        background-color: #16a085;
+    }
+
+    .btn-export:focus,
+    .btn-modify:focus {
+        outline: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
 </html>

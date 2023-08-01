@@ -89,10 +89,12 @@ public class EmployeeController {
         HttpSession session = request.getSession();
         String sessionId = (String) session.getAttribute("sessionId");
         Session domainSession = sessionService.getSessionById(sessionId);
+        Company company = companyService.getCompanyConfiguration();
         if (domainSession.getId() != null){
             List<Employee> employees = service.searchByWord(word);
             model.addAttribute("employees", employees);
             model.addAttribute("sessionId", sessionId);
+            model.addAttribute("company", company);
             return "list";
         } else {
             return "redirect:/";
@@ -104,10 +106,12 @@ public class EmployeeController {
         HttpSession session = request.getSession();
         String sessionId = (String) session.getAttribute("sessionId");
         Session domainSession = sessionService.getSessionById(sessionId);
+        Company company = companyService.getCompanyConfiguration();
         if (domainSession.getId() != null){
             List<Employee> employees = service.searchBySex(sex);
             model.addAttribute("employees", employees);
             model.addAttribute("sessionId", sessionId);
+            model.addAttribute("company", company);
             return "list";
         } else {
             return "redirect:/";
@@ -119,10 +123,12 @@ public class EmployeeController {
         HttpSession session = request.getSession();
         String sessionId = (String) session.getAttribute("sessionId");
         Session domainSession = sessionService.getSessionById(sessionId);
+        Company company = companyService.getCompanyConfiguration();
         if (domainSession.getId() != null){
             List<Employee> employees = service.searchByCode(code);
             model.addAttribute("employees", employees);
             model.addAttribute("sessionId", sessionId);
+            model.addAttribute("company", company);
             return "list";
         } else {
             return "redirect:/";
@@ -135,10 +141,12 @@ public class EmployeeController {
         HttpSession session = request.getSession();
         String sessionId = (String) session.getAttribute("sessionId");
         Session domainSession = sessionService.getSessionById(sessionId);
+        Company company = companyService.getCompanyConfiguration();
         if (domainSession.getId() != null){
             List<Employee> employees = service.sort(sortOrder, sortAttribute);
             model.addAttribute("employees", employees);
             model.addAttribute("sessionId", sessionId);
+            model.addAttribute("company", company);
             return "list";
         } else {
             return "redirect:/";
