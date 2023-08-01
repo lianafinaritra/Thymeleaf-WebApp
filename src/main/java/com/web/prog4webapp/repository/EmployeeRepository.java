@@ -1,6 +1,7 @@
 package com.web.prog4webapp.repository;
 
 import com.web.prog4webapp.model.Employee;
+import com.web.prog4webapp.model.Phone;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,6 +22,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
             "WHERE sex = :word ",
             nativeQuery = true)
     List<Employee> searchBySex(String word);
+
+    @Query("SELECT e FROM Employee e WHERE EXISTS (SELECT p FROM e.phone p WHERE p.phoneNumber LIKE ?1%)")
+    List<Employee> findEmployeesByCode(String code);
 
     List<Employee> findAll(Sort sort);
     Optional<Employee> findEmployeeByUserNameAndPassword(String userName, String password);

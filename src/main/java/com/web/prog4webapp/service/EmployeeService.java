@@ -1,6 +1,5 @@
 package com.web.prog4webapp.service;
 
-import com.web.prog4webapp.controller.model.Credentials;
 import com.web.prog4webapp.model.Employee;
 import com.web.prog4webapp.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
@@ -52,5 +51,10 @@ public class EmployeeService {
     public Employee authenticate(String username, String password) {
         Optional<Employee> employee = repository.findEmployeeByUserNameAndPassword(username, password);
         return employee.orElse(null);
+    }
+
+    @Transactional
+    public List<Employee> searchByCode(String code){
+        return repository.findEmployeesByCode(code);
     }
 }
