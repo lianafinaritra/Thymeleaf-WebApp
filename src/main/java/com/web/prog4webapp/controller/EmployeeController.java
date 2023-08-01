@@ -16,12 +16,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -216,34 +220,24 @@ public class EmployeeController {
         return "redirect:/";
     }
     @GetMapping("/export")
-    public void exportToCSV(@RequestParam("employeeId") String id, HttpServletResponse response) {
-        try {
-            Employee employee = service.getEmployeeById(id);
+    public ResponseEntity<byte[]> exportEmployeesAsCsv() {
+        List<Employee> employees = service.getAllEmployees();
+        StringBuilder csvContent = new StringBuilder();
+        csvContent.append("Nom, Prénom, Email Professionnel, Adresse, Fonction\n");
 
-            List<String> data = new ArrayList<>();
-            data.add("Matricule :," + employee.getMatricule());
-            data.add("Prénom :," + employee.getFirstName());
-            data.add("Nom :," + employee.getLastName());
-            data.add("Anniversaire :," + employee.getBirthDate());
-            data.add("Adresse :," + employee.getAddress());
-            data.add("Fonction :," + employee.getRole());
-            data.add("Date d'embauche :," + employee.getHire());
-            data.add("Email :," + employee.getEmail());
-
-            String fileName = "Fiche_" + employee.getFirstName() + "_" + employee.getLastName() + ".csv";
-            response.setContentType("text/csv");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-
-            PrintWriter writer = response.getWriter();
-
-            for (String row : data) {
-                writer.println(row);
-            }
-
-            writer.flush();
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (Employee employee : employees) {
+            csvContent.append(employee.getLastName()).append(",")
+                    .append(employee.getFirstName()).append(",")
+                    .append(employee.getEmail()).append(",")
+                    .append(employee.getAddress()).append(",")
+                    .append(employee.getRole()).append("\n");
         }
+
+        byte[] csvBytes = csvContent.toString().getBytes();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.TEXT_PLAIN);
+        headers.setContentDispositionFormData("attachment", "employees.csv");
+
+        return new ResponseEntity<>(csvBytes, headers, HttpStatus.OK);
     }
 }

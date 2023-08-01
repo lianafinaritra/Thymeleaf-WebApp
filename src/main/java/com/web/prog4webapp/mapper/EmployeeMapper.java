@@ -74,18 +74,14 @@ public class EmployeeMapper {
             Optional<Phone> phoneOptional = phoneRepository.findPhoneByPhoneNumber(phoneNumber);
 
             if (phoneOptional.isPresent()) {
-                throw new BadRequestException("Ce numéro a déjà été déjà utilisé" + phoneOptional);
-            } else {
-                Phone newPhone = new Phone();
-                newPhone.setPhoneNumber(phoneNumber);
-                Phone savedPhone = phoneRepository.save(newPhone);
-                list.add(savedPhone);
+                list.add(phoneOptional.get());
             }
         }
         return Employee.builder()
                 .id(viewEmployee.getId())
                 .userName(viewEmployee.getUserName())
                 .password(viewEmployee.getPassword())
+                .phone(list)
                 .image(viewEmployee.getImage())
                 .matricule(viewEmployee.getMatricule())
                 .lastName(viewEmployee.getLastName())

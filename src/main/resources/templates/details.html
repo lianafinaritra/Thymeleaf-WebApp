@@ -11,6 +11,11 @@
     <div class="profile-image">
         <img th:src="@{'data:image/jpeg;base64,' + ${employee.image}}" alt="Aucune image" class="profile-image__img">
     </div>
+    <div class="buttons">
+        <a th:href="@{/modify(employeeId=${employee.id})}" class="btn-modify">
+            Modifier
+        </a>
+    </div>
     <div class="profile-info">
         <table>
             <tr>
@@ -86,14 +91,6 @@
                 <td th:text="${company.email}"></td>
             </tr>
         </table>
-    </div>
-    <div class="buttons">
-        <a th:href="@{/export(employeeId=${employee.id})}" class="btn-export">
-            Export CSV
-        </a>
-        <a th:href="@{/modify(employeeId=${employee.id})}" class="btn-modify">
-            Modifier
-        </a>
     </div>
 </div>
 </body>
