@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/styles/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/styles/index.css}">
+  <script th:src="@{/scripts/bootstrap.bundle.min.js}" defer></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+    }
+
+    .error-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .error-message {
+      max-width: 400px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .error-code {
+      font-size: 4rem;
+      color: #e74c3c;
+      margin-bottom: 10px;
+    }
+
+    .error-text {
+      font-size: 1.2rem;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <title>Erreur</title>
+</head>
+<body>
+<div class="error-container">
+  <div class="error-message">
+    <div class="error-code">
+      <h1 class="text-6xl" th:text="${status}"></h1>
+    </div>
+    <div class="error-text">
+      <h4 class="block" th:text="${message}"></h4>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -11,6 +11,7 @@ import com.web.prog4webapp.model.Session;
 import com.web.prog4webapp.service.CompanyService;
 import com.web.prog4webapp.service.EmployeeService;
 import com.web.prog4webapp.service.SessionService;
+import com.web.prog4webapp.validator.EmployeeValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +36,7 @@ public class EmployeeController {
     private final EmployeeMapper mapper;
     private final SessionService sessionService;
     private final CompanyService companyService;
+    private final EmployeeValidator validator;
     @GetMapping("/")
     public String LoginPage(Model model) {
         model.addAttribute("credentials", Credentials.builder().build());
@@ -160,8 +162,8 @@ public class EmployeeController {
     }
 
     @PostMapping("/postEmployee")
-    public String createEmployee(@ModelAttribute("employee") CreateEmployee newEmployee) throws IOException {
-        System.out.println(newEmployee.getPhone());
+    public String createEmployee(@ModelAttribute("employee") CreateEmployee newEmployee) throws Exception {
+        validator.validate(newEmployee);
         service.createOrUpdateEmployee(mapper.toDomain(newEmployee));
         return "redirect:/list";
     }
